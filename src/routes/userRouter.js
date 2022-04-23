@@ -4,7 +4,7 @@ const router = express.Router()
 const userSchema = require('../models/User')
 
 // Create User
-router.post('/create', async (req, res) => {
+router.post('/register', async (req, res) => {
 	const user = userSchema(req.body)
 	await user
 		.save()

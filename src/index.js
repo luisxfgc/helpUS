@@ -2,14 +2,15 @@ const express = require('express')
 const app = express()
 
 const mongoose = require('mongoose')
-const bodyParser = require('body-parser')
 require('dotenv').config()
+
+const cors = require('cors')
 
 const userRoutes = require('./routes/userRouter')
 
 // Middlewares
+app.use(cors())
 app.use(express.json())
-app.use(bodyParser.urlencoded({ extended: false }))
 app.use('/api/users', userRoutes)
 
 // MongoDB connection by mongoose
