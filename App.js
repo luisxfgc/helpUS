@@ -1,8 +1,6 @@
 import * as React from 'react'
-import { TouchableOpacity } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { auth } from './src/config/firebase'
 import Login from './src/views/Login'
 import Dashboard from './src/views/Dashboard'
 import Register from './src/views/Register'
@@ -25,23 +23,7 @@ function App({ navigation }) {
           options={{ headerShown: false }}
         />
         <Stack.Screen name="PasswordRecovery" component={PasswordRecovery} />
-        <Stack.Screen
-          name="Dashboard"
-          component={Dashboard}
-          options={() => {
-            return {
-              headerRight: () => (
-                <TouchableOpacity
-                  type="clear"
-                  title="Sair"
-                  onPress={() => {
-                    auth.signOut()
-                  }}
-                />
-              ),
-            }
-          }}
-        />
+        <Stack.Screen name="Dashboard" component={Dashboard} />
       </Stack.Navigator>
     </NavigationContainer>
   )
