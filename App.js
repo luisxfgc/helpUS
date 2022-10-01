@@ -5,13 +5,19 @@ import Login from './src/views/Login'
 import Dashboard from './src/views/Dashboard'
 import Register from './src/views/Register'
 import PasswordRecovery from './src/views/PasswordRecovery'
+import LoginNativeBase from './src/views/LoginNativeBase'
 
 const Stack = createNativeStackNavigator()
 
 function App({ navigation }) {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="LoginNativeBase">
+        <Stack.Screen
+          name="LoginNativeBase"
+          component={LoginNativeBase}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="Login"
           component={Login}

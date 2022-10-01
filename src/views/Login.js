@@ -12,7 +12,6 @@ import {
   View,
   TouchableWithoutFeedback,
   Keyboard,
-  KeyboardAvoidingView,
 } from 'react-native'
 
 export default function Login({ navigation }) {
@@ -50,96 +49,88 @@ export default function Login({ navigation }) {
       })
   }
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : null}
-      style={{ flex: 1, width: '100%' }}
-    >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.container}>
-          <Image
-            source={require('../assets/login_image.png')}
-            style={styles.headerImage}
-          />
-          <View style={styles.subcontainer}>
-            <Text style={styles.title}>Entrar no helpUS</Text>
-            <Text style={styles.subtitle}>
-              Preencha seus dados para entre ou cria sua conta caso ainda não
-              tenha.
-            </Text>
-            <View style={styles.form}>
-              <TextInput
-                keyboardType="email"
-                style={styles.input}
-                placeholder="Endereço de email"
-                value={email}
-                autoCapitalize="none"
-                onChangeText={(email) => setEmail(email)}
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="Senha"
-                value={password}
-                secureTextEntry={true}
-                onChangeText={(password) => setPassword(password)}
-              />
-              <Pressable onPress={() => navigation.push('PasswordRecovery')}>
-                <Text
-                  style={{
-                    paddingVertical: 10,
-                    color: '#4C4D4F',
-                    opacity: 0.5,
-                  }}
-                >
-                  Esqueci minha senha
-                </Text>
-              </Pressable>
-            </View>
-          </View>
-          <View style={styles.containerButton}>
-            {!isPressed ? (
-              <TouchableOpacity
-                style={styles.buttonLogin}
-                onPress={handleSubmit}
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <Image
+          source={require('../assets/login_image.png')}
+          style={styles.headerImage}
+        />
+        <View style={styles.subcontainer}>
+          <Text style={styles.title}>Entrar no helpUS</Text>
+          <Text style={styles.subtitle}>
+            Preencha seus dados para entre ou cria sua conta caso ainda não
+            tenha.
+          </Text>
+          <View style={styles.form}>
+            <TextInput
+              keyboardType="email"
+              style={styles.input}
+              placeholder="Endereço de email"
+              value={email}
+              autoCapitalize="none"
+              onChangeText={(email) => setEmail(email)}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Senha"
+              value={password}
+              secureTextEntry={true}
+              onChangeText={(password) => setPassword(password)}
+            />
+            <Pressable onPress={() => navigation.push('PasswordRecovery')}>
+              <Text
+                style={{
+                  paddingVertical: 10,
+                  color: '#4C4D4F',
+                  opacity: 0.5,
+                }}
               >
-                {isLoading ? (
-                  <ActivityIndicator size={20} color="white" />
-                ) : (
-                  <Text style={{ color: '#eeeeee', fontSize: 18 }}>Entrar</Text>
-                )}
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity style={styles.buttonLoginPressed}>
-                {isLoading ? (
-                  <ActivityIndicator size={20} color="white" />
-                ) : (
-                  <Text style={{ color: '#eeeeee', fontSize: 18 }}>Entrar</Text>
-                )}
-              </TouchableOpacity>
-            )}
-
-            <Text
-              style={{
-                fontWeight: 'bold',
-                alignSelf: 'center',
-                color: '#4C4D4F',
-                opacity: 0.5,
-                padding: 5,
-              }}
-            >
-              OU
-            </Text>
-            <TouchableOpacity
-              style={styles.buttonRegister}
-              onPress={() => navigation.push('Register')}
-            >
-              <Text style={{ color: '#eeeeee', fontSize: 18 }}>
-                Crie sua conta
+                Esqueci minha senha
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
         </View>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+        <View style={styles.containerButton}>
+          {!isPressed ? (
+            <TouchableOpacity style={styles.buttonLogin} onPress={handleSubmit}>
+              {isLoading ? (
+                <ActivityIndicator size={20} color="white" />
+              ) : (
+                <Text style={{ color: '#eeeeee', fontSize: 18 }}>Entrar</Text>
+              )}
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity style={styles.buttonLoginPressed}>
+              {isLoading ? (
+                <ActivityIndicator size={20} color="white" />
+              ) : (
+                <Text style={{ color: '#eeeeee', fontSize: 18 }}>Entrar</Text>
+              )}
+            </TouchableOpacity>
+          )}
+
+          <Text
+            style={{
+              fontWeight: 'bold',
+              alignSelf: 'center',
+              color: '#4C4D4F',
+              opacity: 0.5,
+              padding: 5,
+            }}
+          >
+            OU
+          </Text>
+          <TouchableOpacity
+            style={styles.buttonRegister}
+            onPress={() => navigation.push('Register')}
+          >
+            <Text style={{ color: '#eeeeee', fontSize: 18 }}>
+              Crie sua conta
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </TouchableWithoutFeedback>
   )
 }
 
