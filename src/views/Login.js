@@ -12,15 +12,18 @@ import {
   View,
   TouchableWithoutFeedback,
   Keyboard,
+  KeyboardAvoidingView,
 } from 'react-native'
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(null)
+  const [isPressed, setIsPressed] = useState(false)
 
   const handleSubmit = () => {
     setIsLoading(true)
+    setIsPressed(true)
     auth
       .signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
@@ -28,7 +31,6 @@ export default function Login({ navigation }) {
         navigation.navigate('Dashboard')
       })
       .catch((error) => {
-        setIsLoading(false)
         if (email === '' || password === '') {
           Alert.alert(
             'Ocorreu uma falha ao tentar realizar o login',
@@ -42,79 +44,102 @@ export default function Login({ navigation }) {
         }
         console.log(error.message)
       })
+      .finally(() => {
+        setIsLoading(false)
+        setIsPressed(false)
+      })
   }
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        <Image
-          source={require('../assets/login_image.png')}
-          style={styles.headerImage}
-        />
-        <View style={styles.subcontainer}>
-          <Text style={styles.title}>Entrar no helpUS</Text>
-          <Text style={styles.subtitle}>
-            Preencha seus dados para entre ou cria sua conta caso ainda não
-            tenha.
-          </Text>
-          <View style={styles.form}>
-            <TextInput
-              keyboardType="email"
-              style={styles.input}
-              placeholder="Endereço de email"
-              value={email}
-              autoCapitalize="none"
-              onChangeText={(email) => setEmail(email)}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Senha"
-              value={password}
-              secureTextEntry={true}
-              onChangeText={(password) => setPassword(password)}
-            />
-            <Pressable onPress={() => navigation.navigate('PasswordRecovery')}>
-              <Text
-                style={{
-                  paddingVertical: 10,
-                  color: '#4C4D4F',
-                  opacity: 0.6,
-                }}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : null}
+      style={{ flex: 1, width: '100%' }}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          <Image
+            source={require('../assets/login_image.png')}
+            style={styles.headerImage}
+          />
+          <View style={styles.subcontainer}>
+            <Text style={styles.title}>Entrar no helpUS</Text>
+            <Text style={styles.subtitle}>
+              Preencha seus dados para entre ou cria sua conta caso ainda não
+              tenha.
+            </Text>
+            <View style={styles.form}>
+              <TextInput
+                keyboardType="email"
+                style={styles.input}
+                placeholder="Endereço de email"
+                value={email}
+                autoCapitalize="none"
+                onChangeText={(email) => setEmail(email)}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Senha"
+                value={password}
+                secureTextEntry={true}
+                onChangeText={(password) => setPassword(password)}
+              />
+              <Pressable onPress={() => navigation.push('PasswordRecovery')}>
+                <Text
+                  style={{
+                    paddingVertical: 10,
+                    color: '#4C4D4F',
+                    opacity: 0.5,
+                  }}
+                >
+                  Esqueci minha senha
+                </Text>
+              </Pressable>
+            </View>
+          </View>
+          <View style={styles.containerButton}>
+            {!isPressed ? (
+              <TouchableOpacity
+                style={styles.buttonLogin}
+                onPress={handleSubmit}
               >
-                Esqueci minha senha
+                {isLoading ? (
+                  <ActivityIndicator size={20} color="white" />
+                ) : (
+                  <Text style={{ color: '#eeeeee', fontSize: 18 }}>Entrar</Text>
+                )}
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity style={styles.buttonLoginPressed}>
+                {isLoading ? (
+                  <ActivityIndicator size={20} color="white" />
+                ) : (
+                  <Text style={{ color: '#eeeeee', fontSize: 18 }}>Entrar</Text>
+                )}
+              </TouchableOpacity>
+            )}
+
+            <Text
+              style={{
+                fontWeight: 'bold',
+                alignSelf: 'center',
+                color: '#4C4D4F',
+                opacity: 0.5,
+                padding: 5,
+              }}
+            >
+              OU
+            </Text>
+            <TouchableOpacity
+              style={styles.buttonRegister}
+              onPress={() => navigation.push('Register')}
+            >
+              <Text style={{ color: '#eeeeee', fontSize: 18 }}>
+                Crie sua conta
               </Text>
-            </Pressable>
+            </TouchableOpacity>
           </View>
         </View>
-        <View style={styles.containerButton}>
-          <TouchableOpacity style={styles.buttonLogin} onPress={handleSubmit}>
-            {isLoading ? (
-              <ActivityIndicator size={25} color="white" />
-            ) : (
-              <Text style={{ color: '#eeeeee', fontSize: 18 }}>Entrar</Text>
-            )}
-          </TouchableOpacity>
-          <Text
-            style={{
-              fontWeight: 'bold',
-              alignSelf: 'center',
-              color: '#4C4D4F',
-              opacity: 0.5,
-              padding: 5,
-            }}
-          >
-            OU
-          </Text>
-          <TouchableOpacity
-            style={styles.buttonRegister}
-            onPress={() => navigation.push('Register')}
-          >
-            <Text style={{ color: '#eeeeee', fontSize: 18 }}>
-              Crie sua conta
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   )
 }
 
@@ -122,7 +147,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginVertical: '20%',
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
     alignItems: 'baseline',
     marginHorizontal: 32,
   },
@@ -133,14 +158,14 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   headerImage: {
-    width: '60%',
-    height: '25%',
+    maxWidth: '50%',
+    maxHeight: '25%',
     alignSelf: 'center',
   },
   form: {
     width: '100%',
     justifyContent: 'center',
-    alignItems: 'flex-start',
+    alignItems: 'center',
   },
   containerButton: {
     width: '100%',
@@ -153,10 +178,9 @@ const styles = StyleSheet.create({
     color: '#2E2E2E',
   },
   subtitle: {
-    fontSize: 18,
-    marginBottom: 25,
+    marginBottom: 20,
     color: '#4C4D4F',
-    opacity: 0.7,
+    opacity: 0.6,
   },
   input: {
     width: '100%',
@@ -172,6 +196,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 15,
     backgroundColor: '#22223b',
+    borderRadius: 10,
+    elevation: 1,
+    marginVertical: 10,
+  },
+  buttonLoginPressed: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 15,
+    backgroundColor: '#4B4B81',
     borderRadius: 10,
     elevation: 1,
     marginVertical: 10,
