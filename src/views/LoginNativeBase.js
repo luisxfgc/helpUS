@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Image } from 'react-native'
+import { Alert } from 'react-native'
 import { auth } from '../config/firebase'
 import {
   NativeBaseProvider,
@@ -9,17 +9,15 @@ import {
   Input,
   Text,
   Button,
-  Alert,
   Divider,
   Heading,
-  VStack,
+  Pressable,
 } from 'native-base'
 
 export default function LoginNativeBase({ navigation }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const img = require('../assets/login_image.png')
 
   const handleSubmit = () => {
     setIsLoading(true)
@@ -31,15 +29,14 @@ export default function LoginNativeBase({ navigation }) {
       })
       .catch((error) => {
         if (email === '' || password === '') {
-          Alert.alert(
-            'Please enter your email and password',
-            'error',
-            error.message
-          )
+          // Alert.alert(
+          //   'Please enter your email and password',
+          //   'error',
+          //   error.message
+          // )
+          error.message
         }
-      })
-      .finally(() => {
-        setIsLoading(false)
+        console.log(error.message)
       })
   }
 
@@ -72,13 +69,35 @@ export default function LoginNativeBase({ navigation }) {
                 placeholder="Password"
                 onChangeText={(password) => setPassword(password)}
               />
+              <Pressable
+                py={5}
+                onPress={() => navigation.push('PasswordRecovery')}
+              >
+                <Text color={'#4C4D4F'} opacity="0.5" fontSize={'xs'}>
+                  Esqueceu sua senha?
+                </Text>
+              </Pressable>
             </Stack>
-            <Stack space={2} mt="5">
-              <Button p={'3'} onPress={handleSubmit}>
+            <Stack space={4} mt="5">
+              <Button
+                p={'3'}
+                shadow={'2'}
+                onPress={handleSubmit}
+                bgColor="#22223b"
+                _pressed={{ bg: '#4A4E69' }}
+              >
                 Entrar
               </Button>
-              <Divider alignSelf="center" w="90%" />
-              <Button p={'3'} onPress={() => navigation.push('Register')}>
+              <Divider alignSelf="center" w="60%" />
+              <Button
+                p={'3'}
+                shadow={'2'}
+                onPress={() => {
+                  navigation.push('Register')
+                }}
+                bgColor="#4A4E69"
+                _pressed={{ bg: '#22223b' }}
+              >
                 Criar uma conta
               </Button>
             </Stack>
