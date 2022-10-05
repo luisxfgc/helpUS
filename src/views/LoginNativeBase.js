@@ -9,7 +9,6 @@ import {
   Input,
   Text,
   Button,
-  Divider,
   Heading,
   Pressable,
 } from 'native-base'
@@ -54,7 +53,7 @@ export default function LoginNativeBase({ navigation }) {
             <Stack>
               <FormControl.Label>Email</FormControl.Label>
               <Input
-                type="email"
+                variant={'filled'}
                 autoCapitalize="none"
                 p={2}
                 placeholder="Email"
@@ -64,6 +63,7 @@ export default function LoginNativeBase({ navigation }) {
             <Stack>
               <FormControl.Label>Password</FormControl.Label>
               <Input
+                variant={'filled'}
                 type="password"
                 p={2}
                 placeholder="Password"
@@ -80,26 +80,23 @@ export default function LoginNativeBase({ navigation }) {
             </Stack>
             <Stack space={4} mt="5">
               <Button
-                p={'3'}
-                shadow={'2'}
+                p={'4'}
+                shadow={'1'}
                 onPress={handleSubmit}
                 bgColor="#22223b"
                 _pressed={{ bg: '#4A4E69' }}
               >
                 Entrar
               </Button>
-              <Divider alignSelf="center" w="60%" />
-              <Button
-                p={'3'}
-                shadow={'2'}
+              <Pressable
                 onPress={() => {
-                  navigation.push('Register')
+                  navigation.navigate('Register')
                 }}
-                bgColor="#4A4E69"
-                _pressed={{ bg: '#22223b' }}
               >
-                Criar uma conta
-              </Button>
+                <Text color="#22223b" alignSelf="center">
+                  Crie uma conta agora!
+                </Text>
+              </Pressable>
             </Stack>
           </Stack>
         </FormControl>
