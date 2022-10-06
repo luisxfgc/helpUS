@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { auth } from '../config/firebase'
+import { MaterialIcons } from '@expo/vector-icons'
 import {
   NativeBaseProvider,
   Center,
   FormControl,
   Stack,
   Input,
+  Icon,
   Text,
   Button,
   Heading,
@@ -40,6 +42,14 @@ export default function Register({ navigation }) {
             <Stack>
               <FormControl.Label>Email</FormControl.Label>
               <Input
+                InputLeftElement={
+                  <Icon
+                    as={<MaterialIcons name="mail" />}
+                    size={5}
+                    ml="2"
+                    color="muted.400"
+                  />
+                }
                 variant={'filled'}
                 type="email"
                 autoCapitalize="none"
@@ -51,6 +61,14 @@ export default function Register({ navigation }) {
             <Stack>
               <FormControl.Label>Password</FormControl.Label>
               <Input
+                InputLeftElement={
+                  <Icon
+                    as={<MaterialIcons name="lock" />}
+                    size={5}
+                    ml="2"
+                    color="muted.400"
+                  />
+                }
                 variant={'filled'}
                 type="password"
                 p={2}

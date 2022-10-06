@@ -6,10 +6,13 @@ import Dashboard from './src/views/Dashboard'
 import Register from './src/views/Register'
 import PasswordRecovery from './src/views/PasswordRecovery'
 import LoginNativeBase from './src/views/LoginNativeBase'
+// Ignore Errors
+import { LogBox } from 'react-native'
+LogBox.ignoreLogs(['EventEmitter.removeListener'])
 
 const Stack = createNativeStackNavigator()
 
-function App({ navigation }) {
+function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="LoginNativeBase">

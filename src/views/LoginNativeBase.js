@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import { Alert } from 'react-native'
 import { auth } from '../config/firebase'
+import { MaterialIcons } from '@expo/vector-icons'
 import {
   NativeBaseProvider,
   Center,
   FormControl,
   Stack,
   Input,
+  Icon,
   Text,
   Button,
   Heading,
@@ -16,10 +17,8 @@ import {
 export default function LoginNativeBase({ navigation }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit = () => {
-    setIsLoading(true)
     auth
       .signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
@@ -27,14 +26,6 @@ export default function LoginNativeBase({ navigation }) {
         navigation.navigate('Dashboard')
       })
       .catch((error) => {
-        if (email === '' || password === '') {
-          // Alert.alert(
-          //   'Please enter your email and password',
-          //   'error',
-          //   error.message
-          // )
-          error.message
-        }
         console.log(error.message)
       })
   }
@@ -53,6 +44,14 @@ export default function LoginNativeBase({ navigation }) {
             <Stack>
               <FormControl.Label>Email</FormControl.Label>
               <Input
+                InputLeftElement={
+                  <Icon
+                    as={<MaterialIcons name="mail" />}
+                    size={5}
+                    ml="2"
+                    color="muted.400"
+                  />
+                }
                 variant={'filled'}
                 autoCapitalize="none"
                 p={2}
@@ -63,6 +62,14 @@ export default function LoginNativeBase({ navigation }) {
             <Stack>
               <FormControl.Label>Password</FormControl.Label>
               <Input
+                InputLeftElement={
+                  <Icon
+                    as={<MaterialIcons name="lock" />}
+                    size={5}
+                    ml="2"
+                    color="muted.400"
+                  />
+                }
                 variant={'filled'}
                 type="password"
                 p={2}
