@@ -31,7 +31,11 @@ function App() {
           component={Register}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="PasswordRecovery" component={PasswordRecovery} />
+        <Stack.Screen
+          name="PasswordRecovery"
+          component={PasswordRecovery}
+          options={{ title: 'Recuperar sua conta' }}
+        />
         <Stack.Screen name="Dashboard" component={Dashboard} />
       </Stack.Navigator>
     </NavigationContainer>
