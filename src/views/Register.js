@@ -42,7 +42,7 @@ export default function Register({ navigation }) {
           <Text>Insira seus dados para entrar ou crie uma conta.</Text>
         </Stack>
         <FormControl isRequired>
-          <Stack space={5}>
+          <Stack space={2}>
             <Stack>
               <FormControl.Label>Nome</FormControl.Label>
               <Input
@@ -120,9 +120,9 @@ export default function Register({ navigation }) {
                           name={show ? 'visibility' : 'visibility-off'}
                         />
                       }
-                      size={5}
-                      mr="2"
-                      color="muted.400"
+                      size={4}
+                      mr="4"
+                      color="muted.200"
                     />
                   </Pressable>
                 }
@@ -132,7 +132,7 @@ export default function Register({ navigation }) {
                 onChangeText={(password) => setPassword(password)}
               />
             </Stack>
-            <Stack mt="10">
+            <Stack mt="5">
               <Button
                 p={'4'}
                 shadow={'1'}
