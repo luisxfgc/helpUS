@@ -1,8 +1,9 @@
 {
   "expo": {
-    "name": "helpusapp",
-    "slug": "helpusapp",
+    "name": "helpUS",
+    "slug": "helpus",
     "version": "1.0.0",
+    "sdkVersion": "46.0.0",
     "assetBundlePatterns": [
       "**/*"
     ]

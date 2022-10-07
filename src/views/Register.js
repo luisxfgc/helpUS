@@ -11,11 +11,15 @@ import {
   Text,
   Button,
   Heading,
+  Pressable,
 } from 'native-base'
 
 export default function Register({ navigation }) {
+  const [name, setName] = useState('')
+  const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [show, setShow] = useState(false)
 
   const handleCreateAccount = () => {
     auth
@@ -30,7 +34,7 @@ export default function Register({ navigation }) {
   }
   return (
     <NativeBaseProvider>
-      <Center maxW={'80%'} height={'full'} m={'10'}>
+      <Center height={'full'} m={'10'} justifyContent={'center'}>
         <Stack alignItems="center" mb="5" space={2}>
           <Heading size="2xl" fontWeight="black">
             Criar sua conta
@@ -40,43 +44,95 @@ export default function Register({ navigation }) {
         <FormControl isRequired>
           <Stack space={5}>
             <Stack>
-              <FormControl.Label>Email</FormControl.Label>
+              <FormControl.Label>Nome</FormControl.Label>
               <Input
                 InputLeftElement={
                   <Icon
-                    as={<MaterialIcons name="mail" />}
-                    size={5}
-                    ml="2"
-                    color="muted.400"
+                    as={<MaterialIcons name="person-outline" />}
+                    size={4}
+                    ml="4"
+                    color="#ddbea9"
+                  />
+                }
+                variant={'filled'}
+                type="text"
+                autoCapitalize="words"
+                p={2}
+                placeholder="Nome completo"
+                onChangeText={(name) => setName(name)}
+              />
+            </Stack>
+            <Stack>
+              <FormControl.Label>Telefone</FormControl.Label>
+              <Input
+                InputLeftElement={
+                  <Icon
+                    as={<MaterialIcons name="phone-iphone" />}
+                    size={4}
+                    ml="4"
+                    color="#ddbea9"
                   />
                 }
                 variant={'filled'}
                 type="email"
                 autoCapitalize="none"
                 p={2}
-                placeholder="Email"
+                placeholder="Número de telefone"
+                onChangeText={(phone) => setPhone(phone)}
+              />
+            </Stack>
+            <Stack>
+              <FormControl.Label>E-mail</FormControl.Label>
+              <Input
+                InputLeftElement={
+                  <Icon
+                    as={<MaterialIcons name="mail-outline" />}
+                    size={4}
+                    ml="4"
+                    color="#ddbea9"
+                  />
+                }
+                variant={'filled'}
+                type="email"
+                autoCapitalize="none"
+                p={2}
+                placeholder="Endereço de e-mail"
                 onChangeText={(email) => setEmail(email)}
               />
             </Stack>
             <Stack>
-              <FormControl.Label>Password</FormControl.Label>
+              <FormControl.Label>Senha</FormControl.Label>
               <Input
+                type={show ? 'text' : 'password'}
                 InputLeftElement={
                   <Icon
-                    as={<MaterialIcons name="lock" />}
-                    size={5}
-                    ml="2"
-                    color="muted.400"
+                    as={<MaterialIcons name="lock-outline" />}
+                    size={4}
+                    ml="4"
+                    color="#ddbea9"
                   />
                 }
+                InputRightElement={
+                  <Pressable onPress={() => setShow(!show)}>
+                    <Icon
+                      as={
+                        <MaterialIcons
+                          name={show ? 'visibility' : 'visibility-off'}
+                        />
+                      }
+                      size={5}
+                      mr="2"
+                      color="muted.400"
+                    />
+                  </Pressable>
+                }
                 variant={'filled'}
-                type="password"
                 p={2}
-                placeholder="Password"
+                placeholder="Sua senha"
                 onChangeText={(password) => setPassword(password)}
               />
             </Stack>
-            <Stack space={4} mt="5">
+            <Stack mt="10">
               <Button
                 p={'4'}
                 shadow={'1'}
