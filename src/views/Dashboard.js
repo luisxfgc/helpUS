@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { db } from '../config/firebase'
-import { MaterialIcons } from '@expo/vector-icons'
 import {
   NativeBaseProvider,
   Center,
   Stack,
-  Input,
-  Icon,
   Text,
   Box,
   Heading,
-  Pressable,
   HStack,
 } from 'native-base'
 
