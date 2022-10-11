@@ -11,6 +11,7 @@ import {
   Box,
   Heading,
   Pressable,
+  HStack,
 } from 'native-base'
 
 export default function Dashboard() {
@@ -27,15 +28,16 @@ export default function Dashboard() {
 
   return (
     <NativeBaseProvider>
-      <Center m={5}>
+      <Center m={5} maxW={'80%'}>
         <Heading>Usuários</Heading>
-        <Stack space={2}>
+        <Stack space={2} mt={10}>
           {user.map((user) => {
             return (
-              <Box>
-                <Text key={user.nome}>
-                  {user.nome} {user.endereco}
-                </Text>
+              <Box width={'100%'}>
+                <HStack key={user.id} space={2} alignItems="center">
+                  <Heading>{user.nome}</Heading>
+                  <Text>{user.endereco}</Text>
+                </HStack>
               </Box>
             )
           })}

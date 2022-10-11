@@ -17,6 +17,7 @@ import {
 export default function LoginNativeBase({ navigation }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [show, setShow] = useState(false)
 
   const handleSubmit = () => {
     auth
@@ -32,24 +33,24 @@ export default function LoginNativeBase({ navigation }) {
 
   return (
     <NativeBaseProvider>
-      <Center maxW={'80%'} height={'full'} m={'10'}>
+      <Center height={'full'} p={'8'}>
         <Stack alignItems="center" mb="5" space={2}>
           <Heading size="2xl" fontWeight="black">
-            Entrar
+            Fazer login
           </Heading>
           <Text>Insira seus dados para entrar ou crie uma conta.</Text>
         </Stack>
         <FormControl isRequired>
-          <Stack space={5}>
+          <Stack space={2}>
             <Stack>
               <FormControl.Label>Email</FormControl.Label>
               <Input
                 InputLeftElement={
                   <Icon
-                    as={<MaterialIcons name="mail" />}
-                    size={5}
-                    ml="2"
-                    color="muted.400"
+                    as={<MaterialIcons name="mail-outline" />}
+                    size={4}
+                    ml="4"
+                    color="#ddbea9"
                   />
                 }
                 variant={'filled'}
@@ -60,20 +61,35 @@ export default function LoginNativeBase({ navigation }) {
               />
             </Stack>
             <Stack>
-              <FormControl.Label>Password</FormControl.Label>
+              <FormControl.Label>Senha</FormControl.Label>
               <Input
+                type={show ? 'text' : 'password'}
                 InputLeftElement={
                   <Icon
-                    as={<MaterialIcons name="lock" />}
-                    size={5}
-                    ml="2"
-                    color="muted.400"
+                    as={<MaterialIcons name="lock-outline" />}
+                    size={4}
+                    ml="4"
+                    color="#ddbea9"
                   />
                 }
+                InputRightElement={
+                  <Pressable onPress={() => setShow(!show)}>
+                    <Icon
+                      as={
+                        <MaterialIcons
+                          name={show ? 'visibility' : 'visibility-off'}
+                        />
+                      }
+                      size={4}
+                      mr="4"
+                      color="muted.400"
+                    />
+                  </Pressable>
+                }
                 variant={'filled'}
-                type="password"
                 p={2}
-                placeholder="Password"
+                autoCapitalize="none"
+                placeholder="Sua senha"
                 onChangeText={(password) => setPassword(password)}
               />
               <Pressable
@@ -96,12 +112,13 @@ export default function LoginNativeBase({ navigation }) {
                 Entrar
               </Button>
               <Pressable
+                m={5}
                 onPress={() => {
                   navigation.navigate('Register')
                 }}
               >
-                <Text color="#22223b" alignSelf="center">
-                  Crie uma conta agora!
+                <Text color="#457b9d" alignSelf="center">
+                  Não tem uma conta? Registre-se agora!
                 </Text>
               </Pressable>
             </Stack>

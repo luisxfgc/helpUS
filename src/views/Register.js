@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { auth } from '../config/firebase'
+import alert from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 import {
   NativeBaseProvider,
@@ -13,6 +14,7 @@ import {
   Heading,
   Pressable,
 } from 'native-base'
+import { Alert } from 'react-native'
 
 export default function Register({ navigation }) {
   const [name, setName] = useState('')
@@ -20,28 +22,31 @@ export default function Register({ navigation }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [show, setShow] = useState(false)
+  const [error, setError] = useState(false)
 
   const handleCreateAccount = () => {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        let user = userCredential.user
+        var user = userCredential.user
         navigation.navigate('Dashboard')
+        console.log(user)
       })
       .catch((error) => {
+        setError(true)
         console.log(error.message)
       })
   }
   return (
     <NativeBaseProvider>
-      <Center height={'full'} m={'10'} justifyContent={'center'}>
+      <Center height={'full'} p={'8'} justifyContent={'center'}>
         <Stack alignItems="center" mb="5" space={2}>
-          <Heading size="2xl" fontWeight="black">
+          <Heading size="2xl" fontWeight="black" color={'#495057'}>
             Criar sua conta
           </Heading>
-          <Text>Insira seus dados para entrar ou crie uma conta.</Text>
+          <Text color={'#6c757d'}>Vamos começar a criar a sua conta</Text>
         </Stack>
-        <FormControl isRequired>
+        <FormControl isRequired isInvalid={error}>
           <Stack space={2}>
             <Stack>
               <FormControl.Label>Nome</FormControl.Label>
@@ -74,7 +79,7 @@ export default function Register({ navigation }) {
                   />
                 }
                 variant={'filled'}
-                type="email"
+                type={phone}
                 autoCapitalize="none"
                 p={2}
                 placeholder="Número de telefone"
@@ -122,15 +127,24 @@ export default function Register({ navigation }) {
                       }
                       size={4}
                       mr="4"
-                      color="muted.200"
+                      color="muted.400"
                     />
                   </Pressable>
                 }
                 variant={'filled'}
                 p={2}
+                autoCapitalize="none"
                 placeholder="Sua senha"
                 onChangeText={(password) => setPassword(password)}
               />
+              <FormControl.HelperText>
+                Must be atleast 6 characters.
+              </FormControl.HelperText>
+              <FormControl.ErrorMessage
+                leftIcon={<MaterialIcons name="dangerous" color={'red'} />}
+              >
+                A senha deve conter pelo menos 8 caracteres.
+              </FormControl.ErrorMessage>
             </Stack>
             <Stack mt="5">
               <Button
