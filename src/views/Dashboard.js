@@ -7,7 +7,8 @@ import {
   Text,
   Box,
   Heading,
-  HStack,
+  VStack,
+  Divider,
 } from 'native-base'
 
 export default function Dashboard() {
@@ -24,16 +25,21 @@ export default function Dashboard() {
 
   return (
     <NativeBaseProvider>
-      <Center m={5} maxW={'80%'}>
+      <Center m={10} maxW={'80%'}>
         <Heading>Usuários</Heading>
         <Stack space={2} mt={10}>
           {user.map((user) => {
             return (
               <Box width={'100%'}>
-                <HStack key={user.id} space={2} alignItems="center">
-                  <Heading>{user.nome}</Heading>
-                  <Text>{user.endereco}</Text>
-                </HStack>
+                <VStack key={user.id} alignItems="center">
+                  <Box justifyContent={'space-between'}>
+                    <Heading>{user.nome}</Heading>
+                    <Text>{user.email}</Text>
+                    <Text>{user.endereco}</Text>
+                    <Text>{user.descricao}</Text>
+                  </Box>
+                  <Divider width={'full'} />
+                </VStack>
               </Box>
             )
           })}
