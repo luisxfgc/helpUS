@@ -3,7 +3,6 @@
     "name": "helpUS",
     "slug": "helpus",
     "version": "1.0.2",
-    "sdkVersion": "45.0.0",
     "assetBundlePatterns": [
       "**/*"
     ]
