@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
-import { auth } from '../config/firebase'
-import alert from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
+import React, { useState, useEffect } from 'react'
+
+import { auth } from '../config/firebase'
+
 import {
   NativeBaseProvider,
   Center,
@@ -14,7 +15,6 @@ import {
   Heading,
   Pressable,
 } from 'native-base'
-import { Alert } from 'react-native'
 
 export default function Register({ navigation }) {
   const [name, setName] = useState('')
@@ -31,6 +31,7 @@ export default function Register({ navigation }) {
         var user = userCredential.user
         navigation.navigate('Dashboard')
         console.log(user)
+        setError(false)
       })
       .catch((error) => {
         setError(true)
@@ -42,9 +43,13 @@ export default function Register({ navigation }) {
       <Center height={'full'} p={'8'} justifyContent={'center'}>
         <Stack alignItems="center" mb="5" space={2}>
           <Heading size="2xl" fontWeight="black" color={'#495057'}>
-            Criar sua conta
+            Criar sua nova conta
           </Heading>
-          <Text color={'#6c757d'}>Vamos começar a criar a sua conta</Text>
+          <Text color={'#6c757d'} opacity="0.7">
+            Preencha seus dados corretamente para a criação da sua conta.
+            Recomendamos que você crie sua conta quando estiver com tempo livre
+            e com calma. Você pode alterar seus dados depois.
+          </Text>
         </Stack>
         <FormControl isRequired isInvalid={error}>
           <Stack space={2}>
@@ -55,7 +60,7 @@ export default function Register({ navigation }) {
                   <Icon
                     as={<MaterialIcons name="person-outline" />}
                     size={4}
-                    ml="4"
+                    ml="2"
                     color="#ddbea9"
                   />
                 }
@@ -66,6 +71,11 @@ export default function Register({ navigation }) {
                 placeholder="Nome completo"
                 onChangeText={(name) => setName(name)}
               />
+              <FormControl.ErrorMessage
+                leftIcon={<MaterialIcons name="dangerous" color={'#F13636'} />}
+              >
+                Seu nome não pode estar vazio!
+              </FormControl.ErrorMessage>
             </Stack>
             <Stack>
               <FormControl.Label>Telefone</FormControl.Label>
@@ -74,7 +84,7 @@ export default function Register({ navigation }) {
                   <Icon
                     as={<MaterialIcons name="phone-iphone" />}
                     size={4}
-                    ml="4"
+                    ml="2"
                     color="#ddbea9"
                   />
                 }
@@ -85,6 +95,11 @@ export default function Register({ navigation }) {
                 placeholder="Número de telefone"
                 onChangeText={(phone) => setPhone(phone)}
               />
+              <FormControl.ErrorMessage
+                leftIcon={<MaterialIcons name="dangerous" color={'#F13636'} />}
+              >
+                Seu telefone não pode estar vazio!
+              </FormControl.ErrorMessage>
             </Stack>
             <Stack>
               <FormControl.Label>E-mail</FormControl.Label>
@@ -93,7 +108,7 @@ export default function Register({ navigation }) {
                   <Icon
                     as={<MaterialIcons name="mail-outline" />}
                     size={4}
-                    ml="4"
+                    ml="2"
                     color="#ddbea9"
                   />
                 }
@@ -104,6 +119,11 @@ export default function Register({ navigation }) {
                 placeholder="Endereço de e-mail"
                 onChangeText={(email) => setEmail(email)}
               />
+              <FormControl.ErrorMessage
+                leftIcon={<MaterialIcons name="dangerous" color={'#F13636'} />}
+              >
+                O Email não pode estar vazio!
+              </FormControl.ErrorMessage>
             </Stack>
             <Stack>
               <FormControl.Label>Senha</FormControl.Label>
@@ -113,7 +133,7 @@ export default function Register({ navigation }) {
                   <Icon
                     as={<MaterialIcons name="lock-outline" />}
                     size={4}
-                    ml="4"
+                    ml="2"
                     color="#ddbea9"
                   />
                 }
@@ -138,12 +158,12 @@ export default function Register({ navigation }) {
                 onChangeText={(password) => setPassword(password)}
               />
               <FormControl.HelperText>
-                Must be atleast 6 characters.
+                A senha deve conter no mínimo 8 caracteres.
               </FormControl.HelperText>
               <FormControl.ErrorMessage
-                leftIcon={<MaterialIcons name="dangerous" color={'red'} />}
+                leftIcon={<MaterialIcons name="dangerous" color={'#F13636'} />}
               >
-                A senha deve conter pelo menos 8 caracteres.
+                A senha não pode estar vazia!
               </FormControl.ErrorMessage>
             </Stack>
             <Stack mt="5">

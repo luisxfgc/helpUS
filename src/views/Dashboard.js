@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react'
+
 import { db } from '../config/firebase'
+
+import { MaterialIcons } from '@expo/vector-icons'
+
 import {
   NativeBaseProvider,
   Center,
@@ -8,7 +12,9 @@ import {
   Box,
   Heading,
   VStack,
-  Divider,
+  HStack,
+  Pressable,
+  ScrollView,
 } from 'native-base'
 
 export default function Dashboard() {
@@ -17,7 +23,7 @@ export default function Dashboard() {
     db.collection('users').onSnapshot((query) => {
       const listUsers = []
       query.forEach((doc) => {
-        listUsers.push(doc.data())
+        listUsers.push({ ...doc.data(), id: doc.id })
       })
       setUser(listUsers)
     })
@@ -25,26 +31,56 @@ export default function Dashboard() {
 
   return (
     <NativeBaseProvider>
-      <Center m={10} maxW={'80%'}>
-        <Heading>Usuários</Heading>
-        <Stack space={2} mt={10}>
-          {user.map((user) => {
-            return (
-              <Box width={'100%'}>
-                <VStack key={user.id} alignItems="center">
-                  <Box justifyContent={'space-between'}>
-                    <Heading>{user.nome}</Heading>
-                    <Text>{user.email}</Text>
-                    <Text>{user.endereco}</Text>
+      <ScrollView>
+        <Center flex={1} mx={'4'}>
+          <Stack space={'4'} mt={'10'}>
+            {user.map((user) => {
+              return (
+                <Box key={user.id}>
+                  <Box mb={'4'} p={'4'}>
+                    <Box
+                      justifyContent={'space-between'}
+                      flexDirection={'row'}
+                      alignItems={'center'}
+                      mb={'2'}
+                    >
+                      <HStack alignItems={'center'} space={'4'}>
+                        <Heading
+                          size={'lg'}
+                          fontWeight="semibold"
+                          color={'#495057'}
+                        >
+                          {user.nome}
+                        </Heading>
+                        <Text>{user.email}</Text>
+                      </HStack>
+                      <Pressable
+                        bgColor="#22223b"
+                        px={'4'}
+                        py={'2'}
+                        rounded={'md'}
+                        flexDirection={'row'}
+                        alignItems={'center'}
+                        justifyContent={'space-between'}
+                      >
+                        <Text color={'white'} mr={'1'}>
+                          Pedir Ajuda
+                        </Text>
+                        <MaterialIcons name="add" size={12} color={'white'} />
+                      </Pressable>
+                    </Box>
+                    <HStack alignItems={'center'} space={'2'}>
+                      <Text fontWeight={'semibold'}>Endereço</Text>
+                      <Text>{user.endereco}</Text>
+                    </HStack>
                     <Text>{user.descricao}</Text>
                   </Box>
-                  <Divider width={'full'} />
-                </VStack>
-              </Box>
-            )
-          })}
-        </Stack>
-      </Center>
+                </Box>
+              )
+            })}
+          </Stack>
+        </Center>
+      </ScrollView>
     </NativeBaseProvider>
   )
 }

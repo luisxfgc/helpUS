@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
-import { auth } from '../config/firebase'
 import { MaterialIcons } from '@expo/vector-icons'
+import React, { useState } from 'react'
+
+import { auth } from '../config/firebase'
+
 import {
   NativeBaseProvider,
   Center,
@@ -35,12 +37,14 @@ export default function LoginNativeBase({ navigation }) {
     <NativeBaseProvider>
       <Center height={'full'} p={'8'}>
         <Stack alignItems="center" mb="5" space={2}>
-          <Heading size="2xl" fontWeight="black">
-            Fazer login
+          <Heading size="2xl" fontWeight="black" color={'#495057'}>
+            Fazer Login
           </Heading>
-          <Text>Insira seus dados para entrar ou crie uma conta.</Text>
+          <Text color={'#6c757d'} opacity="0.7">
+            Insira seus dados para entrar ou crie uma conta.
+          </Text>
         </Stack>
-        <FormControl isRequired>
+        <FormControl>
           <Stack space={2}>
             <Stack>
               <FormControl.Label>Email</FormControl.Label>
@@ -49,7 +53,7 @@ export default function LoginNativeBase({ navigation }) {
                   <Icon
                     as={<MaterialIcons name="mail-outline" />}
                     size={4}
-                    ml="4"
+                    ml="2"
                     color="#ddbea9"
                   />
                 }
@@ -68,7 +72,7 @@ export default function LoginNativeBase({ navigation }) {
                   <Icon
                     as={<MaterialIcons name="lock-outline" />}
                     size={4}
-                    ml="4"
+                    ml="2"
                     color="#ddbea9"
                   />
                 }
@@ -112,12 +116,12 @@ export default function LoginNativeBase({ navigation }) {
                 Entrar
               </Button>
               <Pressable
-                m={5}
+                m={'2'}
                 onPress={() => {
                   navigation.navigate('Register')
                 }}
               >
-                <Text color="#457b9d" alignSelf="center">
+                <Text color="#4A4E69" alignSelf="center">
                   Não tem uma conta? Registre-se agora!
                 </Text>
               </Pressable>

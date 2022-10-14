@@ -1,10 +1,12 @@
-import * as React from 'react'
-import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import Login from './src/views/Login'
-import Register from './src/views/Register'
-import PasswordRecovery from './src/views/PasswordRecovery'
+import { NavigationContainer } from '@react-navigation/native'
+import * as React from 'react'
+
 import Dashboard from './src/views/Dashboard'
+import Login from './src/views/Login'
+import PasswordRecovery from './src/views/PasswordRecovery'
+import Register from './src/views/Register'
+
 // Ignore Errors
 import { LogBox } from 'react-native'
 LogBox.ignoreLogs(['EventEmitter.removeListener'])
