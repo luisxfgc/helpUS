@@ -44,7 +44,7 @@ export default function Dashboard() {
                       alignItems={'center'}
                       mb={'2'}
                     >
-                      <HStack alignItems={'center'} space={'4'}>
+                      <HStack alignItems={'center'} space={'2'}>
                         <Heading
                           size={'lg'}
                           fontWeight="semibold"

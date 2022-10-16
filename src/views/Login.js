@@ -37,7 +37,7 @@ export default function LoginNativeBase({ navigation }) {
     <NativeBaseProvider>
       <Center height={'full'} p={'8'}>
         <Stack alignItems="center" mb="5" space={2}>
-          <Heading size="2xl" fontWeight="black" color={'#495057'}>
+          <Heading size="xl" fontWeight="black" color={'#495057'}>
             Fazer Login
           </Heading>
           <Text color={'#6c757d'} opacity="0.7">
