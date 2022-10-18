@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { MaterialIcons } from '@expo/vector-icons'
 import * as ImagePicker from 'expo-image-picker'
 
-import { auth } from '../config/firebase'
+import { auth, app } from '../config/firebase'
 
 import {
   NativeBaseProvider,
+  Image,
   Center,
   FormControl,
   Stack,
@@ -15,28 +16,31 @@ import {
   Button,
   Heading,
   Pressable,
-  Box,
+  VStack,
   ScrollView,
 } from 'native-base'
 
 export default function Register({ navigation }) {
+  const [image, setImage] = useState(null)
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [show, setShow] = useState(false)
+  const [uploading, setUploading] = useState(null)
   const [error, setError] = useState(false)
 
   useEffect(() => {
-    (async () => {
+    ;(async () => {
       if (Platform.OS !== 'web') {
-        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        const { status } =
+          await ImagePicker.requestMediaLibraryPermissionsAsync()
         if (status !== 'granted') {
-          alert('Sorry, we need camera roll permissions to make this work!');
+          alert('Sorry, we need camera roll permissions to make this work!')
         }
       }
-    })();
-  }, []);
+    })()
+  }, [])
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -44,17 +48,27 @@ export default function Register({ navigation }) {
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
-    });
+    })
+    const source = { uri: result.uri }
+    console.log(source)
+    setImage(source)
+  }
 
-    if (!result.cancelled) {
-      const storage = getStorage()
-      const ref = ref(storage, 'image.jpg')
-      const img = await fetch(result.uri)
-      const bytes = await img.blob()
+  const uploadImage = async () => {
+    setUploading(true)
+    const response = await fetch(image.uri)
+    const blob = await response.blob()
+    const filename = image.uri.substring(image.uri.lastIndexOf('/') + 1)
+    var ref = app.storage().ref().child(filename).put(blob)
 
-      await uploadBytes(ref, bytes)
+    try {
+      await ref
+    } catch (error) {
+      console.log(error)
     }
-  };
+    setUploading(false)
+    setImage(null)
+  }
 
   const handleCreateAccount = () => {
     auth
@@ -73,9 +87,9 @@ export default function Register({ navigation }) {
   return (
     <NativeBaseProvider>
       <ScrollView>
-        <Center flex={'1'} p={'8'} mt={'12'}>
-          <Stack alignItems="center" mb="5" space={2}>
-            <Heading size="xl" fontWeight="black" color={'#495057'}>
+        <Center flex={'1'} p={'8'} mt={'16'}>
+          <Stack alignItems="center" mb="4" space={2}>
+            <Heading fontWeight="bold" color={'#495057'}>
               Criar sua nova conta
             </Heading>
             <Text color={'#6c757d'} opacity="0.7">
@@ -84,9 +98,22 @@ export default function Register({ navigation }) {
               livre e com calma. Você pode alterar seus dados depois.
             </Text>
           </Stack>
-          <Box px={'8'} py={'4'}>
-            <Text fontSize={'sm'} fontWeight={'semibold'} color={'#6c757d'}>Upload foto de perfil</Text>
-          </Box>
+          <VStack my={'2'} space={'2'} alignItems={'center'}>
+            {image && (
+              <Image
+                source={{ uri: image.uri }}
+                w={40}
+                h={40}
+                resizeMode="cover"
+                rounded={'full'}
+                alt="Profile Image"
+                onp
+              />
+            )}
+            <Pressable onPress={() => pickImage()}>
+              <Text>Adicione uma foto de perfil</Text>
+            </Pressable>
+          </VStack>
           <FormControl isRequired isInvalid={error}>
             <Stack space={2}>
               <Stack>
@@ -224,7 +251,7 @@ export default function Register({ navigation }) {
             </Stack>
           </FormControl>
         </Center>
-        </ScrollView>
+      </ScrollView>
     </NativeBaseProvider>
   )
 }
