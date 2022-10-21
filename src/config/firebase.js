@@ -1,29 +1,22 @@
 import firebase from 'firebase/compat/app'
-import { getAnalytics } from "firebase/analytics";
 import 'firebase/compat/auth'
 import 'firebase/compat/firestore'
-import 'firebase/storage'
+import 'firebase/compat/storage'
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyAFZho0j1UVH8YeWPKN84HQ0hDlS9NNS4s',
-  authDomain: 'helpus-api.firebaseapp.com',
-  projectId: 'helpus-api',
-  storageBucket: 'helpus-api.appspot.com',
-  messagingSenderId: '803741636136',
-  appId: '1:803741636136:web:4a245310d1e5fcd4cdc71d',
-  measurementId: 'G-MQM6CQP3ZQ',
+  apiKey: 'AIzaSyBp4_XSYFBGgbvCYLYflacTdYhociTBt6c',
+  authDomain: 'helpus-app.firebaseapp.com',
+  projectId: 'helpus-app',
+  storageBucket: 'helpus-app.appspot.com',
+  messagingSenderId: '389464724983',
+  appId: '1:389464724983:web:d691c3854c06a150b5caf2',
+  measurementId: 'G-F7D7S8J3PL',
 }
 
-let app
-
-if (!firebase.apps.length) {
-  app = firebase.initializeApp(firebaseConfig)
-  const analytics = getAnalytics(app);
-} else {
-  app = firebase.app()
-}
+const app = firebase.initializeApp(firebaseConfig)
 
 const db = app.firestore()
 const auth = firebase.auth()
+const storage = firebase.storage()
 
-export { db, auth, app }
+export { db, auth, app, storage }

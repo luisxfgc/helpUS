@@ -1,8 +1,4 @@
 import org.apache.tools.ant.taskdefs.condition.Os
-implementation platform 'com.google.firebase:firebase-bom:30.5.0'
-implementation 'com.google.firebase:firebase-inappmessaging-display'
-implementation 'com.google.firebase:firebase-analytics'
-
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
@@ -29,7 +25,7 @@ buildscript {
         google()
         mavenCentral()
     }
-    dependencies {     
+    dependencies {
         classpath('com.android.tools.build:gradle:7.1.1')
         classpath('com.facebook.react:react-native-gradle-plugin')
         classpath('de.undercouch:gradle-download-task:5.0.1')
