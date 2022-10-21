@@ -1,4 +1,5 @@
 import firebase from 'firebase/compat/app'
+import { getAnalytics } from "firebase/analytics";
 import 'firebase/compat/auth'
 import 'firebase/compat/firestore'
 import 'firebase/storage'
@@ -17,6 +18,7 @@ let app
 
 if (!firebase.apps.length) {
   app = firebase.initializeApp(firebaseConfig)
+  const analytics = getAnalytics(app);
 } else {
   app = firebase.app()
 }

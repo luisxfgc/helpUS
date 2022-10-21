@@ -18,6 +18,7 @@ import {
   Pressable,
   VStack,
   ScrollView,
+  AlertDialog,
 } from 'native-base'
 
 export default function Register({ navigation }) {
@@ -89,7 +90,7 @@ export default function Register({ navigation }) {
       <ScrollView>
         <Center flex={'1'} p={'8'} mt={'16'}>
           <Stack alignItems="center" mb="4" space={2}>
-            <Heading size={'2xl'} fontWeight="bold" color={'#495057'}>
+            <Heading size={'xl'} fontWeight="bold" color={'#495057'}>
               Criar sua nova conta
             </Heading>
             <Text color={'#6c757d'} opacity="0.7">
@@ -102,8 +103,8 @@ export default function Register({ navigation }) {
             {image && (
               <Image
                 source={{ uri: image.uri }}
-                w={32}
-                h={32}
+                w={24}
+                h={24}
                 resizeMode="cover"
                 rounded={'full'}
                 alt="Profile Image"
