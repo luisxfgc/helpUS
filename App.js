@@ -13,10 +13,12 @@ LogBox.ignoreLogs(['EventEmitter.removeListener'])
 
 const Stack = createNativeStackNavigator()
 
-function App() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+const Navigator = () => {
+  const isLoggedIn = true
+
+  if (!isLoggedIn) {
+    return (
+      <Stack.Navigator>
         <Stack.Screen
           name="Login"
           component={Login}
@@ -32,8 +34,20 @@ function App() {
           component={PasswordRecovery}
           options={{ title: 'Recuperar sua conta' }}
         />
-        <Stack.Screen name="Dashboard" component={Dashboard} />
       </Stack.Navigator>
+    )
+  }
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Dashboard" component={Dashboard} />
+    </Stack.Navigator>
+  )
+}
+
+function App() {
+  return (
+    <NavigationContainer>
+      <Navigator />
     </NavigationContainer>
   )
 }
