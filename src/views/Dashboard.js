@@ -51,7 +51,6 @@ export default function Dashboard() {
                           color={'#495057'}
                         >
                           {user.nome}
-                          {params.img}
                         </Heading>
                         <Text>{user.email}</Text>
                       </HStack>

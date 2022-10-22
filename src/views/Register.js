@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { MaterialIcons } from '@expo/vector-icons'
 import * as ImagePicker from 'expo-image-picker'
 
-import { auth, app } from '../config/firebase'
+import { auth, app, createUserDocument } from '../config/firebase'
 
 import {
   NativeBaseProvider,
@@ -20,6 +20,7 @@ import {
   VStack,
   ScrollView,
 } from 'native-base'
+import { Alert } from 'react-native'
 
 export default function Register({ navigation }) {
   const [image, setImage] = useState(null)
@@ -71,20 +72,22 @@ export default function Register({ navigation }) {
     setImage(null)
   }
 
-  const handleCreateAccount = () => {
-    auth
+  const handleCreateAccount = async () => {
+    await auth
       .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
         var user = userCredential.user
-        const img = image.uri
-        navigation.navigate('Dashboard', { img })
+        uploadImage()
+        Alert.alert('Conta criada com sucesso!', user)
         console.log(user)
         setError(false)
-        uploadImage()
+        createUserDocument(user, name, phone)
+        navigation.push('Dashboard')
       })
       .catch((error) => {
         setError(true)
-        console.log(error.message)
+        Alert.alert('Erro ao criar a conta', error.message)
+        console.log('Authentication error', error.message)
       })
   }
   return (
