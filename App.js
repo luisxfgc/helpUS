@@ -12,34 +12,26 @@ import { LogBox } from 'react-native'
 LogBox.ignoreLogs(['EventEmitter.removeListener'])
 
 const Stack = createNativeStackNavigator()
+const isLoggedIn = false
 
 const Navigator = () => {
-  const isLoggedIn = true
-
-  if (!isLoggedIn) {
-    return (
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Register"
-          component={Register}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="PasswordRecovery"
-          component={PasswordRecovery}
-          options={{ title: 'Recuperar sua conta' }}
-        />
-      </Stack.Navigator>
-    )
-  }
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Dashboard" component={Dashboard} />
+    <Stack.Navigator initialRouteName="Login">
+      <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Register"
+        component={Register}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="PasswordRecovery"
+        component={PasswordRecovery}
+        options={{ title: 'Recuperar sua conta' }}
+      />
     </Stack.Navigator>
   )
 }
@@ -47,7 +39,13 @@ const Navigator = () => {
 function App() {
   return (
     <NavigationContainer>
-      <Navigator />
+      {!isLoggedIn ? (
+        <Navigator />
+      ) : (
+        <Stack.Navigator initialRouteName="Dashboard">
+          <Stack.Screen name="Dashboard" component={Dashboard} />
+        </Stack.Navigator>
+      )}
     </NavigationContainer>
   )
 }
