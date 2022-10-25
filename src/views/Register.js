@@ -95,7 +95,7 @@ export default function Register({ navigation }) {
   return (
     <NativeBaseProvider>
       <ScrollView>
-        <Center flex={'1'} p={'6'} mt={'12'}>
+        <Center flex={'1'} p={'8'} mt={'16'}>
           <Stack alignItems="center" space={2} mb={'2'}>
             <Heading size={'xl'} fontWeight="bold" color={'#495057'}>
               Criar sua nova conta
@@ -244,10 +244,10 @@ export default function Register({ navigation }) {
                   A senha não pode estar vazia!
                 </FormControl.ErrorMessage>
               </Stack>
-              <Stack mt={'4'}>
+              <Stack mt={'8'}>
                 <Button
                   p={'4'}
-                  shadow={'2'}
+                  rounded={'full'}
                   onPress={(handleCreateAccount, uploadImage)}
                   bgColor="#22223b"
                   _pressed={{ bg: '#4A4E69' }}

@@ -29,7 +29,7 @@ export default function LoginNativeBase({ navigation }) {
       .signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
         var user = userCredential.user
-        navigation.navigate('Dashboard')
+        navigation.push('HomePage')
         ToastAndroid.show(
           'Bem-vindo' + ' ' + user.displayName,
           ToastAndroid.BOTTOM,
