@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { SafeAreaView, ToastAndroid } from 'react-native'
+import { Alert, SafeAreaView, ToastAndroid } from 'react-native'
 
 import { MaterialIcons } from '@expo/vector-icons'
 
@@ -37,6 +37,7 @@ export default function LoginNativeBase({ navigation }) {
         )
       })
       .catch((error) => {
+        Alert.alert('Erro ao fazer Login', error.message)
         console.log(error.message)
       })
   }
@@ -53,7 +54,7 @@ export default function LoginNativeBase({ navigation }) {
               Insira seus dados para entrar ou crie uma conta.
             </Text>
           </Stack>
-          <FormControl>
+          <FormControl isRequired>
             <Stack space={2}>
               <Stack>
                 <FormControl.Label>Email</FormControl.Label>
