@@ -1,9 +1,6 @@
 import firebase from 'firebase/compat/app'
-
 import 'firebase/compat/firestore'
-
 import 'firebase/compat/auth'
-
 import 'firebase/compat/storage'
 
 const firebaseConfig = {
@@ -27,23 +24,25 @@ if (firebase.apps.length === 0) {
 export const db = firebase.firestore()
 export const auth = firebase.auth()
 
-export const createUserDocument = async (user, name, phone) => {
-  if (!user) return
-  const userRef = db.doc(`users/${user.uid}`)
-  const snapshot = await userRef.get()
+// export const createUserDocument = async (user, name, phone) => {
+//   if (!user) return
+//   const userRef = db.doc(`users/${user.uid}`)
+//   const snapshot = await userRef.get()
 
-  if (!snapshot.exists) {
-    const { email } = user
-    const { name } = name
-    const { phone } = phone
-    try {
-      userRef.set({
-        user,
-        name,
-        phone,
-      })
-    } catch (error) {
-      console.log('Register user error:', error)
-    }
-  }
-}
+//   if (!snapshot.exists) {
+//     const { email } = user
+//     const { name } = name
+//     const { phone } = phone
+//     try {
+//       userRef.set({
+//         user,
+//         name,
+//         phone,
+//       })
+//     } catch (error) {
+//       console.log('Register user error:', error)
+//     }
+//   }
+// }
+
+export default app

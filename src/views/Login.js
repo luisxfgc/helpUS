@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { SafeAreaView } from 'react-native'
+import { SafeAreaView, ToastAndroid } from 'react-native'
 
 import { MaterialIcons } from '@expo/vector-icons'
 
@@ -30,6 +30,11 @@ export default function LoginNativeBase({ navigation }) {
       .then((userCredential) => {
         var user = userCredential.user
         navigation.navigate('Dashboard')
+        ToastAndroid.show(
+          'Bem-vindo' + ' ' + user.displayName,
+          ToastAndroid.BOTTOM,
+          ToastAndroid.LONG
+        )
       })
       .catch((error) => {
         console.log(error.message)
