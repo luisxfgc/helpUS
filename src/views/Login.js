@@ -4,7 +4,7 @@ import { Alert, SafeAreaView, ToastAndroid } from 'react-native'
 
 import { MaterialIcons } from '@expo/vector-icons'
 
-import { auth } from '../config/firebase'
+import { auth } from '../Config/firebase'
 
 import {
   NativeBaseProvider,
@@ -30,11 +30,7 @@ export default function LoginNativeBase({ navigation }) {
       .then((userCredential) => {
         var user = userCredential.user
         navigation.push('HomePage')
-        ToastAndroid.show(
-          'Bem-vindo' + ' ' + user.displayName,
-          ToastAndroid.BOTTOM,
-          ToastAndroid.LONG
-        )
+        ToastAndroid.show('Login', ToastAndroid.BOTTOM, ToastAndroid.LONG)
       })
       .catch((error) => {
         Alert.alert('Erro ao fazer Login', error.message)
@@ -115,10 +111,10 @@ export default function LoginNativeBase({ navigation }) {
                   </Text>
                 </Pressable>
               </Stack>
-              <Stack space={4} mt="5">
+              <Stack space={'4'} mt={'4'}>
                 <Button
                   p={'4'}
-                  shadow={'1'}
+                  rounded={'full'}
                   onPress={handleSubmit}
                   bgColor="#22223b"
                   _pressed={{ bg: '#4A4E69' }}
@@ -126,13 +122,16 @@ export default function LoginNativeBase({ navigation }) {
                   Entrar
                 </Button>
                 <Pressable
-                  m={'2'}
+                  p={'4'}
+                  rounded={'full'}
+                  borderWidth="1"
                   onPress={() => {
                     navigation.navigate('Register')
                   }}
+                  _pressed={{ borderColor: '#4A4E69' }}
                 >
                   <Text color="#4A4E69" alignSelf="center">
-                    Não tem uma conta? Registre-se agora!
+                    Criar uma conta
                   </Text>
                 </Pressable>
               </Stack>

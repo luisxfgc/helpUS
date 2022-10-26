@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { db } from '../config/firebase'
+import { db } from '../Config/firebase'
 
 import { MaterialIcons } from '@expo/vector-icons'
 

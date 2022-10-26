@@ -3,18 +3,18 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
 
-import Dashboard from './src/views/Dashboard'
-import Login from './src/views/Login'
-import PasswordRecovery from './src/views/PasswordRecovery'
-import Register from './src/views/Register'
-import Settings from './src/views/Settings'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-
-import { AuthContext } from './src/providers/context'
-
 // Ignore Errors
 import { ActivityIndicator, LogBox, View } from 'react-native'
 LogBox.ignoreLogs(['EventEmitter.removeListener'])
+
+import Dashboard from './src/Views/Dashboard'
+import Login from './src/Views/Login'
+import PasswordRecovery from './src/Views/PasswordRecovery'
+import Register from './src/Views/Register'
+import Settings from './src/Views/Settings'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+
+import { AuthContext } from './src/Providers/context'
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -57,7 +57,7 @@ function HomePage() {
 
 function AuthPages() {
   return (
-    <Stack.Navigator initialRouteName="Login">
+    <Stack.Navigator>
       <Stack.Screen
         name="Login"
         component={Login}

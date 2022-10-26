@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Alert, ToastAndroid } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
-import * as ImagePicker from 'expo-image-picker'
-import { auth, app } from '../config/firebase'
+import { auth, app } from '../Config/firebase'
 
 import {
   NativeBaseProvider,
@@ -22,54 +21,11 @@ import {
 } from 'native-base'
 
 export default function Register({ navigation }) {
-  const [image, setImage] = useState(null)
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [show, setShow] = useState(false)
-  const [uploading, setUploading] = useState(null)
-  const [error, setError] = useState(false)
-
-  useEffect(() => {
-    ;(async () => {
-      if (Platform.OS !== 'web') {
-        const { status } =
-          await ImagePicker.requestMediaLibraryPermissionsAsync()
-        if (status !== 'granted') {
-          alert('Sorry, we need camera roll permissions to make this work!')
-        }
-      }
-    })()
-  }, [])
-
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    })
-    const source = { uri: result.uri }
-    console.log(source)
-    setImage(source)
-  }
-
-  const uploadImage = async () => {
-    setUploading(true)
-    const response = await fetch(image.uri)
-    const blob = await response.blob()
-    const filename = image.uri.substring(image.uri.lastIndexOf('/') + 1)
-    var ref = app.storage().ref().child(filename).put(blob)
-
-    try {
-      await ref
-    } catch (error) {
-      console.log(error)
-    }
-    setUploading(false)
-    setImage(null)
-  }
 
   const handleCreateAccount = () => {
     auth
@@ -77,8 +33,6 @@ export default function Register({ navigation }) {
       .then((userCredential) => {
         var user = userCredential.user
         console.log(user)
-        setError(false)
-        // createUserDocument(user, name, phone)
         ToastAndroid.show(
           'Sua conta foi criada com Sucesso!',
           ToastAndroid.BOTTOM,
@@ -106,22 +60,7 @@ export default function Register({ navigation }) {
               livre e com calma. Você pode alterar seus dados depois.
             </Text>
           </Stack>
-          <VStack space={'2'} alignItems={'center'} mt={'4'}>
-            {image && (
-              <Image
-                source={{ uri: image.uri }}
-                w={16}
-                h={16}
-                resizeMode="cover"
-                rounded={'full'}
-                alt="Profile Image"
-              />
-            )}
-            <Pressable onPress={() => pickImage()}>
-              <Text>Adicione uma foto de perfil</Text>
-            </Pressable>
-          </VStack>
-          <FormControl isRequired isInvalid={error}>
+          <FormControl isRequired>
             <Stack space={'2'}>
               <Stack>
                 <FormControl.Label>Nome</FormControl.Label>
@@ -248,7 +187,7 @@ export default function Register({ navigation }) {
                 <Button
                   p={'4'}
                   rounded={'full'}
-                  onPress={(handleCreateAccount, uploadImage)}
+                  onPress={handleCreateAccount}
                   bgColor="#22223b"
                   _pressed={{ bg: '#4A4E69' }}
                 >
