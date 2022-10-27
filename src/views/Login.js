@@ -1,12 +1,8 @@
-import React, { useContext, useState } from 'react'
-
+import React, { useContext, useEffect, useState } from 'react'
 import { Alert, SafeAreaView, ToastAndroid } from 'react-native'
-
 import { MaterialIcons } from '@expo/vector-icons'
-
 import { auth } from '../Config/firebase'
-
-import { AuthContext } from '../Providers/context'
+import { AuthContext } from '../Providers/AuthContext'
 
 import {
   NativeBaseProvider,
@@ -21,30 +17,30 @@ import {
   Pressable,
 } from 'native-base'
 
-export default function LoginNativeBase({ navigation }) {
+export default function Login({ navigation }) {
+  const { signIn } = useContext(AuthContext)
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [show, setShow] = useState(false)
-
-  const { signIn } = useContext(AuthContext)
 
   const handleSubmit = () => {
     auth
       .signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        var user = userCredential.user
+        const user = userCredential.user
         ToastAndroid.show(
           'Login' + user.email,
           ToastAndroid.BOTTOM,
           ToastAndroid.LONG
         )
-        navigation.navigate('HomePage', { screen: 'Dashboard' })
+        console.log('Login sucessful:', user.email)
+        navigation.replace('HomePage', { screen: 'Dashboard' })
       })
       .catch((error) => {
         Alert.alert('Erro ao fazer Login', error.message)
         console.log(error.message)
       })
-      .finally(signIn)
   }
 
   return (
@@ -124,11 +120,7 @@ export default function LoginNativeBase({ navigation }) {
                 <Button
                   p={'4'}
                   rounded={'full'}
-                  onPress={() => {
-                    if (handleSubmit) {
-                      const LoginAccount = () => signIn
-                    }
-                  }}
+                  onPress={handleSubmit}
                   bgColor="#22223b"
                   _pressed={{ bg: '#4A4E69' }}
                 >

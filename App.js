@@ -1,11 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react'
+import { ActivityIndicator, LogBox, View } from 'react-native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
-
-// Ignore Errors
-import { ActivityIndicator, LogBox, View } from 'react-native'
-LogBox.ignoreLogs(['EventEmitter.removeListener'])
+import { AuthContext } from './src/Providers/AuthContext'
+import FontAwesome from '@expo/vector-icons/FontAwesome'
 
 import Dashboard from './src/Views/Dashboard'
 import Login from './src/Views/Login'
@@ -13,10 +12,8 @@ import Profile from './src/Views/Profile'
 import PasswordRecovery from './src/Views/PasswordRecovery'
 import Register from './src/Views/Register'
 import Settings from './src/Views/Settings'
-import FontAwesome from '@expo/vector-icons/FontAwesome'
 
-import { AuthContext } from './src/Providers/context'
-
+LogBox.ignoreLogs(['EventEmitter.removeListener'])
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
 
@@ -51,7 +48,7 @@ function HomePage() {
 
 function App() {
   const [isLoading, setIsLoading] = useState(false)
-  const [userToken, setUserToken] = useState('123')
+  const [userToken, setUserToken] = useState(null)
 
   const authContext = useMemo(() => ({
     signIn: () => {

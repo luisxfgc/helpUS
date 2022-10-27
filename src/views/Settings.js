@@ -9,7 +9,7 @@ import {
   Text,
 } from 'native-base'
 
-import { AuthContext } from '../Providers/context'
+import { AuthContext } from '../Providers/AuthContext'
 
 export default function Settings() {
   const { signOut } = useContext(AuthContext)

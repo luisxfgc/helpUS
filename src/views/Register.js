@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Alert, ToastAndroid } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
-import { auth, app } from '../Config/firebase'
+import { auth } from '../Config/firebase'
 
 import {
   NativeBaseProvider,
