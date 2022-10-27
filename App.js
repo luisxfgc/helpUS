@@ -9,6 +9,7 @@ LogBox.ignoreLogs(['EventEmitter.removeListener'])
 
 import Dashboard from './src/Views/Dashboard'
 import Login from './src/Views/Login'
+import Profile from './src/Views/Profile'
 import PasswordRecovery from './src/Views/PasswordRecovery'
 import Register from './src/Views/Register'
 import Settings from './src/Views/Settings'
@@ -25,15 +26,15 @@ function HomePage() {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName
-          size = 22
+          size = 24
 
           if (route.name === 'Dashboard') {
             iconName = focused ? 'home' : 'home-outline'
           } else if (route.name === 'Settings') {
             iconName = focused ? 'settings' : 'settings-outline'
+          } else if (route.name === 'Profile') {
+            iconName = focused ? 'person' : 'person-outline'
           }
-
-          // You can return any component that you like here!
           return <Ionicons name={iconName} size={size} color={color} />
         },
         tabBarActiveTintColor: '#4A4E69',
@@ -41,39 +42,10 @@ function HomePage() {
         tabBarShowLabel: false,
       })}
     >
-      <Tab.Screen
-        name="Dashboard"
-        component={Dashboard}
-        options={{ headerShown: false }}
-      />
-      <Tab.Screen
-        name="Settings"
-        component={Settings}
-        options={{ headerShown: false }}
-      />
+      <Tab.Screen name="Dashboard" component={Dashboard} />
+      <Tab.Screen name="Profile" component={Profile} />
+      <Tab.Screen name="Settings" component={Settings} />
     </Tab.Navigator>
-  )
-}
-
-function AuthPages() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Login"
-        component={Login}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Register"
-        component={Register}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="PasswordRecovery"
-        component={PasswordRecovery}
-        options={{ title: 'Recuperar sua conta' }}
-      />
-    </Stack.Navigator>
   )
 }
 
@@ -99,7 +71,7 @@ function App() {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false)
-    }, 1000)
+    }, 100)
   }, [])
 
   if (isLoading) {
@@ -112,11 +84,35 @@ function App() {
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
-        {userToken !== null ? (
-          <Stack.Screen name="HomePage" component={HomePage} />
-        ) : (
-          <AuthPages />
-        )}
+        <Stack.Navigator>
+          {userToken !== null ? (
+            <Stack.Group>
+              <Stack.Screen
+                name="HomePage"
+                component={HomePage}
+                options={{ headerShown: false }}
+              />
+            </Stack.Group>
+          ) : (
+            <Stack.Group>
+              <Stack.Screen
+                name="Login"
+                component={Login}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Register"
+                component={Register}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="PasswordRecovery"
+                component={PasswordRecovery}
+                options={{ title: 'Recuperar sua conta' }}
+              />
+            </Stack.Group>
+          )}
+        </Stack.Navigator>
       </NavigationContainer>
     </AuthContext.Provider>
   )
