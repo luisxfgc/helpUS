@@ -13,7 +13,7 @@ import Profile from './src/Views/Profile'
 import PasswordRecovery from './src/Views/PasswordRecovery'
 import Register from './src/Views/Register'
 import Settings from './src/Views/Settings'
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import FontAwesome from '@expo/vector-icons/FontAwesome'
 
 import { AuthContext } from './src/Providers/context'
 
@@ -29,13 +29,13 @@ function HomePage() {
           size = 24
 
           if (route.name === 'Dashboard') {
-            iconName = focused ? 'home' : 'home-outline'
-          } else if (route.name === 'Settings') {
-            iconName = focused ? 'settings' : 'settings-outline'
+            iconName = focused ? 'home' : 'home'
           } else if (route.name === 'Profile') {
-            iconName = focused ? 'person' : 'person-outline'
+            iconName = focused ? 'user' : 'user'
+          } else if (route.name === 'Settings') {
+            iconName = focused ? 'gear' : 'gear'
           }
-          return <Ionicons name={iconName} size={size} color={color} />
+          return <FontAwesome name={iconName} size={size} color={color} />
         },
         tabBarActiveTintColor: '#4A4E69',
         tabBarInactiveTintColor: 'gray',
@@ -51,7 +51,7 @@ function HomePage() {
 
 function App() {
   const [isLoading, setIsLoading] = useState(false)
-  const [userToken, setUserToken] = useState(null)
+  const [userToken, setUserToken] = useState('123')
 
   const authContext = useMemo(() => ({
     signIn: () => {

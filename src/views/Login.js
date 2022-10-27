@@ -33,13 +33,18 @@ export default function LoginNativeBase({ navigation }) {
       .signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
         var user = userCredential.user
+        ToastAndroid.show(
+          'Login' + user.email,
+          ToastAndroid.BOTTOM,
+          ToastAndroid.LONG
+        )
         navigation.navigate('HomePage', { screen: 'Dashboard' })
-        ToastAndroid.show('Login', ToastAndroid.BOTTOM, ToastAndroid.LONG)
       })
       .catch((error) => {
         Alert.alert('Erro ao fazer Login', error.message)
         console.log(error.message)
       })
+      .finally(signIn)
   }
 
   return (
@@ -119,7 +124,11 @@ export default function LoginNativeBase({ navigation }) {
                 <Button
                   p={'4'}
                   rounded={'full'}
-                  onPress={(handleSubmit, signIn)}
+                  onPress={() => {
+                    if (handleSubmit) {
+                      const LoginAccount = () => signIn
+                    }
+                  }}
                   bgColor="#22223b"
                   _pressed={{ bg: '#4A4E69' }}
                 >
@@ -130,7 +139,7 @@ export default function LoginNativeBase({ navigation }) {
                   rounded={'full'}
                   borderWidth="1"
                   onPress={() => {
-                    navigation.navigate('Register')
+                    navigation.push('Register')
                   }}
                   _pressed={{ borderColor: '#4A4E69' }}
                 >

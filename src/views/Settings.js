@@ -1,5 +1,13 @@
 import React, { useContext } from 'react'
-import { NativeBaseProvider, Box, Button, Heading, Center } from 'native-base'
+import {
+  NativeBaseProvider,
+  Box,
+  Button,
+  Heading,
+  Center,
+  Pressable,
+  Text,
+} from 'native-base'
 
 import { AuthContext } from '../Providers/context'
 
@@ -9,16 +17,10 @@ export default function Settings() {
     <NativeBaseProvider>
       <Center flex={'1'} alignItems={'center'} justifyContent={'center'}>
         <Box>
-          <Heading>Teste para Sair</Heading>
-          <Button
-            p={'4'}
-            rounded={'full'}
-            onPress={signOut}
-            bgColor="#22223b"
-            _pressed={{ bg: '#4A4E69' }}
-          >
-            Sair
-          </Button>
+          <Heading py={'4'}>Teste para Sair</Heading>
+          <Pressable onPress={signOut} _pressed={{ color: '#4A4E69' }}>
+            <Text>Sair</Text>
+          </Pressable>
         </Box>
       </Center>
     </NativeBaseProvider>
