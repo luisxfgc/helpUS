@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Alert, SafeAreaView, ToastAndroid } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 import { auth } from '../Config/firebase'
