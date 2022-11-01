@@ -30,7 +30,7 @@ export default function Login({ navigation }) {
       .then((userCredential) => {
         const user = userCredential.user
         ToastAndroid.show(
-          'Login' + user.email,
+          'Login Realizado com sucesso!',
           ToastAndroid.BOTTOM,
           ToastAndroid.LONG
         )

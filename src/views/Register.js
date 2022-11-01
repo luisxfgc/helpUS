@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Alert, ToastAndroid } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
-import { auth, db } from '../Config/firebase'
-import { doc, setDoc } from 'firebase/firestore'
+import { auth, createUserDocument, app } from '../Config/firebase'
 
 import {
   NativeBaseProvider,
@@ -31,30 +30,29 @@ export default function Register({ navigation }) {
   const [show, setShow] = useState(false)
 
   const handleCreateAccount = () => {
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        var user = userCredential.user
-        setDoc(doc(db, 'users'), {
-          name: name,
-          adress: adress,
-          phone: phone,
-          email: user.email,
-          password: user.password,
+    try {
+      const { userData } = auth
+        .createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          console.log('Cadastro realizado com sucesso!', userData)
+          ToastAndroid.show(
+            'Sua conta foi criada com Sucesso!',
+            ToastAndroid.BOTTOM,
+            ToastAndroid.SHORT
+          )
         })
-        console.log(user)
-        ToastAndroid.show(
-          'Sua conta foi criada com Sucesso!',
-          ToastAndroid.BOTTOM,
-          ToastAndroid.SHORT
-        )
-        navigation.navigate('Dashboard')
-      })
-      .catch((error) => {
-        setError(true)
-        Alert.alert('Erro ao criar a conta', error.message)
-        console.log(error.message)
-      })
+        .catch((error) => {
+          ToastAndroid.show(
+            error.message,
+            ToastAndroid.BOTTOM,
+            ToastAndroid.SHORT
+          )
+          console.error(error.message)
+        })
+      createUserDocument(userData, { name, phone, adress })
+    } catch (error) {
+      console.log('error', error.message)
+    }
   }
   return (
     <NativeBaseProvider>
