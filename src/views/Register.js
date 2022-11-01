@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Alert, ToastAndroid } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
-import { auth } from '../Config/firebase'
+import { auth, db } from '../Config/firebase'
+import { doc, setDoc } from 'firebase/firestore'
 
 import {
   NativeBaseProvider,
@@ -23,8 +24,10 @@ import {
 export default function Register({ navigation }) {
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
+  const [adress, setAdress] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState(false)
   const [show, setShow] = useState(false)
 
   const handleCreateAccount = () => {
@@ -32,13 +35,20 @@ export default function Register({ navigation }) {
       .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
         var user = userCredential.user
+        setDoc(doc(db, 'users'), {
+          name: name,
+          adress: adress,
+          phone: phone,
+          email: user.email,
+          password: user.password,
+        })
         console.log(user)
         ToastAndroid.show(
           'Sua conta foi criada com Sucesso!',
           ToastAndroid.BOTTOM,
           ToastAndroid.SHORT
         )
-        navigation.push('Dashboard')
+        navigation.navigate('Dashboard')
       })
       .catch((error) => {
         setError(true)
@@ -112,6 +122,31 @@ export default function Register({ navigation }) {
                   }
                 >
                   Seu telefone não pode estar vazio!
+                </FormControl.ErrorMessage>
+              </Stack>
+              <Stack>
+                <FormControl.Label>Endereço</FormControl.Label>
+                <Input
+                  InputLeftElement={
+                    <Icon
+                      as={<MaterialIcons name="gps-fixed" />}
+                      size={4}
+                      ml="2"
+                      color="#ddbea9"
+                    />
+                  }
+                  variant={'filled'}
+                  autoCapitalize="characters"
+                  p={2}
+                  placeholder="Endereço"
+                  onChangeText={(adress) => setAdress(adress)}
+                />
+                <FormControl.ErrorMessage
+                  leftIcon={
+                    <MaterialIcons name="dangerous" color={'#F13636'} />
+                  }
+                >
+                  Seu Endereço não pode estar vazio!
                 </FormControl.ErrorMessage>
               </Stack>
               <Stack>

@@ -34,8 +34,8 @@ export default function Login({ navigation }) {
           ToastAndroid.BOTTOM,
           ToastAndroid.LONG
         )
-        console.log('Login sucessful:', user.email)
         navigation.replace('HomePage', { screen: 'Dashboard' })
+        console.log('Login Realizado com sucesso, bem-vindo ', user.email)
       })
       .catch((error) => {
         Alert.alert('Erro ao fazer Login', error.message)
@@ -120,7 +120,7 @@ export default function Login({ navigation }) {
                 <Button
                   p={'4'}
                   rounded={'full'}
-                  onPress={handleSubmit}
+                  onPress={signIn}
                   bgColor="#22223b"
                   _pressed={{ bg: '#4A4E69' }}
                 >
