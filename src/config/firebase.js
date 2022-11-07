@@ -1,5 +1,5 @@
 import firebase from 'firebase/compat/app'
-import 'firebase/firestore'
+import 'firebase/compat/firestore'
 import 'firebase/compat/auth'
 import 'firebase/compat/storage'
 
@@ -13,34 +13,7 @@ const firebaseConfig = {
   measurementId: 'G-F7D7S8J3PL',
 }
 
-let app
-
-if (firebase.apps.length === 0) {
-  app = firebase.initializeApp(firebaseConfig)
-} else {
-  app = firebase.app()
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig)
 }
-
-export const db = firebase.firestore()
-export const auth = firebase.auth()
-
-export const createUserDocument = async (user, additionalData) => {
-  if (!user) return
-
-  const userRef = db.doc('users/${user.uid}')
-  const snapshot = await userRef.get()
-
-  if (!snapshot.exists) {
-    const { email } = user
-    const { phone, name, adress } = additionalData
-
-    try {
-      userRef.set({ name, email, phone, adress, createdAt: new Date() })
-      console.log(userRef)
-    } catch (error) {
-      console.error('error', error.message)
-    }
-  }
-}
-
-export default app
+export { firebase }

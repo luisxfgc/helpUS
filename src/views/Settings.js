@@ -15,7 +15,7 @@ export default function Settings() {
   const { signOut } = useContext(AuthContext)
   return (
     <NativeBaseProvider>
-      <Center flex={'1'} alignItems={'center'} justifyContent={'center'}>
+      <Center flex={'1'}>
         <Box>
           <Heading py={'4'}>Teste para Sair</Heading>
           <Pressable onPress={signOut} _pressed={{ color: '#4A4E69' }}>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Alert, ToastAndroid } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
-import { auth, createUserDocument, app } from '../Config/firebase'
+import { firebase } from '../Config/firebase'
 
 import {
   NativeBaseProvider,
@@ -26,33 +26,40 @@ export default function Register({ navigation }) {
   const [adress, setAdress] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState(false)
-  const [show, setShow] = useState(false)
 
-  const handleCreateAccount = () => {
-    try {
-      const { userData } = auth
-        .createUserWithEmailAndPassword(email, password)
-        .then(() => {
-          console.log('Cadastro realizado com sucesso!', userData)
-          ToastAndroid.show(
-            'Sua conta foi criada com Sucesso!',
-            ToastAndroid.BOTTOM,
-            ToastAndroid.SHORT
-          )
-        })
-        .catch((error) => {
-          ToastAndroid.show(
-            error.message,
-            ToastAndroid.BOTTOM,
-            ToastAndroid.SHORT
-          )
-          console.error(error.message)
-        })
-      createUserDocument(userData, { name, phone, adress })
-    } catch (error) {
-      console.log('error', error.message)
-    }
+  const [show, setShow] = useState(false)
+  const [error, setError] = useState(false)
+
+  const handleCreateAccount = async () => {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(async (userCredential) => {
+        const user = userCredential
+        const userData = {
+          name: name,
+          email: email,
+          password: password,
+          adress: adress,
+          phone: phone,
+        }
+        if (user) {
+          await firebase
+            .firestore()
+            .collection('users')
+            .doc(user.uid)
+            .set(userData)
+          Alert.alert('Sua conta foi cadastrada com sucesso!')
+          console.log('Sucesso! Conta criada: ', userData.name)
+        }
+      })
+      .catch((error) => {
+        Alert.alert('Erro!', error.message)
+        console.error(error.message)
+      })
+      .finally(() => {
+        navigation.navigate('Login')
+      })
   }
   return (
     <NativeBaseProvider>

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { Alert, SafeAreaView, ToastAndroid } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
-import { auth } from '../Config/firebase'
+import { firebase } from '../Config/firebase'
 import { AuthContext } from '../Providers/AuthContext'
 
 import {
@@ -25,7 +25,8 @@ export default function Login({ navigation }) {
   const [show, setShow] = useState(false)
 
   const handleSubmit = () => {
-    auth
+    firebase
+      .auth()
       .signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
         const user = userCredential.user

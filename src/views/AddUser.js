@@ -1,10 +1,10 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-export default function Profile() {
+export default function AddUser() {
   return (
     <View>
-      <Text>Teste</Text>
+      <Text>Adicionar um amigo</Text>
     </View>
   )
 }

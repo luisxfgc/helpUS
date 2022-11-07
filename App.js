@@ -12,6 +12,8 @@ import Profile from './src/Views/Profile'
 import PasswordRecovery from './src/Views/PasswordRecovery'
 import Register from './src/Views/Register'
 import Settings from './src/Views/Settings'
+import { Button, NativeBaseProvider } from 'native-base'
+import AddUser from './src/Views/AddUser'
 
 LogBox.ignoreLogs(['EventEmitter.removeListener'])
 const Stack = createNativeStackNavigator()
@@ -40,8 +42,16 @@ function HomePage() {
       })}
     >
       <Tab.Screen name="Dashboard" component={Dashboard} />
-      <Tab.Screen name="Profile" component={Profile} />
-      <Tab.Screen name="Settings" component={Settings} />
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{ title: 'Perfil' }}
+      />
+      <Tab.Screen
+        name="Settings"
+        component={Settings}
+        options={{ title: 'Configurações' }}
+      />
     </Tab.Navigator>
   )
 }
@@ -88,6 +98,11 @@ function App() {
                 name="HomePage"
                 component={HomePage}
                 options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="AddUser"
+                component={AddUser}
+                options={{ title: 'Adicionar um amigo' }}
               />
             </Stack.Group>
           ) : (
