@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
 import { AuthContext } from './src/Providers/AuthContext'
-import FontAwesome from '@expo/vector-icons/FontAwesome'
+import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 
 import Dashboard from './src/Views/Dashboard'
 import Login from './src/Views/Login'
@@ -25,23 +25,37 @@ function HomePage() {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName
-          size = 24
+          size = 26
 
           if (route.name === 'Dashboard') {
             iconName = focused ? 'home' : 'home'
           } else if (route.name === 'Profile') {
-            iconName = focused ? 'user' : 'user'
+            iconName = focused ? 'person' : 'person'
           } else if (route.name === 'Settings') {
-            iconName = focused ? 'gear' : 'gear'
+            iconName = focused ? 'settings' : 'settings'
           }
-          return <FontAwesome name={iconName} size={size} color={color} />
+          return <MaterialIcons name={iconName} size={size} color={color} />
         },
         tabBarActiveTintColor: '#4A4E69',
         tabBarInactiveTintColor: 'gray',
-        tabBarShowLabel: false,
+        tabBarShowLabel: true,
+        tabBarStyle: {
+          minHeight: 72,
+          paddingTop: 10,
+          paddingBottom: 12,
+          marginVertical: 16,
+          marginHorizontal: 20,
+          borderRadius: 20,
+          borderColor: '#fff',
+          shadowColor: 'gray',
+        },
       })}
     >
-      <Tab.Screen name="Dashboard" component={Dashboard} />
+      <Tab.Screen
+        name="Dashboard"
+        component={Dashboard}
+        options={{ title: 'Página Inicial' }}
+      />
       <Tab.Screen
         name="Profile"
         component={Profile}

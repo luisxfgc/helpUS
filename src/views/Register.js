@@ -43,8 +43,8 @@ export default function Register({ navigation }) {
           adress: adress,
           phone: phone,
         }
-        if (user) {
-          await firebase
+        if (userData != null) {
+            await firebase
             .firestore()
             .collection('users')
             .doc(user.uid)
@@ -56,9 +56,6 @@ export default function Register({ navigation }) {
       .catch((error) => {
         Alert.alert('Erro!', error.message)
         console.error(error.message)
-      })
-      .finally(() => {
-        navigation.navigate('Login')
       })
   }
   return (
