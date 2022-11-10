@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { firebase } from '../Config/firebase'
 import { useNavigation } from '@react-navigation/native'
-import { MaterialIcons } from '@expo/vector-icons'
+import { Octicons } from '@expo/vector-icons'
 import {
   NativeBaseProvider,
   Center,
@@ -13,6 +13,9 @@ import {
   HStack,
   Pressable,
   ScrollView,
+  Divider,
+  Avatar,
+  Button,
 } from 'native-base'
 
 export default function Dashboard() {
@@ -30,22 +33,15 @@ export default function Dashboard() {
               alignItems={'center'}
               justifyContent={'center'}
               mt={'4'}
-              mx={'6'}
+              mx={'8'}
               onPress={() => {
                 navigation.navigate('AddUser')
               }}
             >
-              <MaterialIcons
-                name="person-add-alt-1"
-                size={24}
-                color="#495059"
-              />
+              <Octicons name="person-add" size={20} color="#495059" />
             </Pressable>
           </NativeBaseProvider>
         )
-      },
-      headerSearchBarOptions: {
-        placeholder: 'Search',
       },
     })
   }, [navigation])
@@ -70,15 +66,27 @@ export default function Dashboard() {
   return (
     <NativeBaseProvider>
       <ScrollView>
-        <Box flex={1} m={'4'}>
-          <Stack space={'8'} mt={'4'}>
+        <Box flex={1} m={'6'}>
+          <Stack space={'4'} mt={'2'}>
             {user.map((user) => {
               return (
-                <Box key={user.id}>
-                  <Heading color={'#495059'} mb={'2'}>
-                    {user.name}
-                  </Heading>
-                  <VStack space={'1'}>
+                <Box key={user.id} p={'6'} rounded={'2xl'} bgColor={'white'}>
+                  <HStack
+                    mb={'4'}
+                    alignItems={'center'}
+                    justifyContent={'space-between'}
+                  >
+                    <HStack alignItems={'center'} space={'1'}>
+                      <Avatar size={'xs'} />
+                      <Heading fontSize={'18'} color={'#495059'}>
+                        {user.name}
+                      </Heading>
+                    </HStack>
+                    <Button size={'xs'}>Adicionar</Button>
+                  </HStack>
+
+                  <Divider mb={'4'} bg={'muted.100'} />
+                  <VStack space={'2'} p={'4'} bg={'indigo.50'} rounded={'2xl'}>
                     <Text>Email: {user.email}</Text>
                     <Text>Telefone: {user.phone}</Text>
                     <Text>Endereço: {user.adress}</Text>

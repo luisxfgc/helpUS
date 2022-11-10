@@ -44,7 +44,7 @@ export default function Register({ navigation }) {
           phone: phone,
         }
         if (userData != null) {
-            await firebase
+          await firebase
             .firestore()
             .collection('users')
             .doc(user.uid)

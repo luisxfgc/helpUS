@@ -4,18 +4,18 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
 import { AuthContext } from './src/Providers/AuthContext'
-import MaterialIcons from '@expo/vector-icons/MaterialIcons'
+import { Octicons } from '@expo/vector-icons'
+LogBox.ignoreLogs(['EventEmitter.removeListener'])
 
+// Importing Screens
 import Dashboard from './src/Views/Dashboard'
 import Login from './src/Views/Login'
 import Profile from './src/Views/Profile'
 import PasswordRecovery from './src/Views/PasswordRecovery'
 import Register from './src/Views/Register'
 import Settings from './src/Views/Settings'
-import { Button, NativeBaseProvider } from 'native-base'
 import AddUser from './src/Views/AddUser'
 
-LogBox.ignoreLogs(['EventEmitter.removeListener'])
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
 
@@ -25,29 +25,25 @@ function HomePage() {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName
-          size = 26
+          size = 20
 
           if (route.name === 'Dashboard') {
             iconName = focused ? 'home' : 'home'
           } else if (route.name === 'Profile') {
             iconName = focused ? 'person' : 'person'
           } else if (route.name === 'Settings') {
-            iconName = focused ? 'settings' : 'settings'
+            iconName = focused ? 'gear' : 'gear'
           }
-          return <MaterialIcons name={iconName} size={size} color={color} />
+          return <Octicons name={iconName} size={size} color={color} />
         },
         tabBarActiveTintColor: '#4A4E69',
         tabBarInactiveTintColor: 'gray',
         tabBarShowLabel: true,
         tabBarStyle: {
-          minHeight: 72,
+          minHeight: 64,
           paddingTop: 10,
           paddingBottom: 12,
-          marginVertical: 16,
-          marginHorizontal: 20,
-          borderRadius: 20,
-          borderColor: '#fff',
-          shadowColor: 'gray',
+          shadowColor: '#fff',
         },
       })}
     >
