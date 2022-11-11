@@ -3,18 +3,18 @@ import { ActivityIndicator, LogBox, View } from 'react-native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
-import { AuthContext } from './src/Providers/AuthContext'
+import { AuthContext } from './src/providers/AuthContext'
 import { Octicons } from '@expo/vector-icons'
 LogBox.ignoreLogs(['EventEmitter.removeListener'])
 
 // Importing Screens
-import Dashboard from './src/Views/Dashboard'
-import Login from './src/Views/Login'
-import Profile from './src/Views/Profile'
-import PasswordRecovery from './src/Views/PasswordRecovery'
-import Register from './src/Views/Register'
-import Settings from './src/Views/Settings'
-import AddUser from './src/Views/AddUser'
+import Dashboard from './src/views/Dashboard'
+import Login from './src/views/Login'
+import Profile from './src/views/Profile'
+import PasswordRecovery from './src/views/PasswordRecovery'
+import Register from './src/views/Register'
+import Settings from './src/views/Settings'
+import AddUser from './src/views/AddUser'
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -67,7 +67,7 @@ function HomePage() {
 }
 
 function App() {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [userToken, setUserToken] = useState(null)
 
   const authContext = useMemo(() => ({

@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react'
 import { Alert, SafeAreaView, ToastAndroid } from 'react-native'
-import { MaterialIcons } from '@expo/vector-icons'
-import { firebase } from '../Config/firebase'
-import { AuthContext } from '../Providers/AuthContext'
+import { Octicons } from '@expo/vector-icons'
+import { firebase } from '../config/firebase'
+import { AuthContext } from '../providers/AuthContext'
 
 import {
   NativeBaseProvider,
@@ -15,6 +15,8 @@ import {
   Button,
   Heading,
   Pressable,
+  Divider,
+  HStack,
 } from 'native-base'
 
 export default function Login({ navigation }) {
@@ -35,7 +37,7 @@ export default function Login({ navigation }) {
           ToastAndroid.BOTTOM,
           ToastAndroid.LONG
         )
-        navigation.replace('HomePage', { screen: 'Dashboard' })
+        navigation.navigate('HomePage', { screen: 'Dashboard' })
         console.log('Login Realizado com sucesso, bem-vindo ', user.email)
       })
       .catch((error) => {
@@ -49,11 +51,11 @@ export default function Login({ navigation }) {
       <SafeAreaView>
         <Center height={'full'} p={'8'}>
           <Stack alignItems="center" mb="5" space={2}>
-            <Heading size="xl" fontWeight="black" color={'#495057'}>
-              Fazer Login
+            <Heading size="2xl" fontWeight={'bold'} color={'#495057'}>
+              Fazer login
             </Heading>
-            <Text color={'#6c757d'} opacity="0.7">
-              Insira seus dados para entrar ou crie uma conta.
+            <Text color={'#6c757d'} opacity="0.9">
+              Utilize suas credenciais para entrar ou crie uma conta!
             </Text>
           </Stack>
           <FormControl isRequired>
@@ -63,7 +65,7 @@ export default function Login({ navigation }) {
                 <Input
                   InputLeftElement={
                     <Icon
-                      as={<MaterialIcons name="mail-outline" />}
+                      as={<Octicons name="mail" />}
                       size={4}
                       ml="2"
                       color="#ddbea9"
@@ -82,7 +84,7 @@ export default function Login({ navigation }) {
                   type={show ? 'text' : 'password'}
                   InputLeftElement={
                     <Icon
-                      as={<MaterialIcons name="lock-outline" />}
+                      as={<Octicons name="lock" />}
                       size={4}
                       ml="2"
                       color="#ddbea9"
@@ -91,11 +93,7 @@ export default function Login({ navigation }) {
                   InputRightElement={
                     <Pressable onPress={() => setShow(!show)}>
                       <Icon
-                        as={
-                          <MaterialIcons
-                            name={show ? 'visibility' : 'visibility-off'}
-                          />
-                        }
+                        as={<Octicons name={show ? 'eye' : 'eye-closed'} />}
                         size={4}
                         mr="4"
                         color="muted.400"
@@ -117,29 +115,36 @@ export default function Login({ navigation }) {
                   </Text>
                 </Pressable>
               </Stack>
-              <Stack space={'4'} mt={'4'}>
+              <Stack space={'4'} mt={'2'}>
                 <Button
                   p={'4'}
                   rounded={'full'}
-                  onPress={signIn}
+                  onPress={handleSubmit}
                   bgColor="#22223b"
-                  _pressed={{ bg: '#4A4E69' }}
+                  _pressed={signIn}
                 >
                   Entrar
                 </Button>
-                <Pressable
+                <Center w={'full'}>
+                  <HStack alignItems={'center'} space={'4'}>
+                    <Divider w={'1/4'} bgColor={'muted.200'} />
+                    <Text fontSize={'xs'} color={'muted.400'}>
+                      Ou você pode
+                    </Text>
+                    <Divider w={'1/4'} bgColor={'muted.200'} />
+                  </HStack>
+                </Center>
+                <Button
                   p={'4'}
                   rounded={'full'}
-                  borderWidth="1"
                   onPress={() => {
                     navigation.push('Register')
                   }}
-                  _pressed={{ borderColor: '#4A4E69' }}
+                  bgColor="#4A4E69"
+                  _pressed={{ bg: '#22223b' }}
                 >
-                  <Text color="#4A4E69" alignSelf="center">
-                    Criar uma conta
-                  </Text>
-                </Pressable>
+                  Criar uma conta
+                </Button>
               </Stack>
             </Stack>
           </FormControl>

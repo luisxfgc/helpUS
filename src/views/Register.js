@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Alert, ToastAndroid } from 'react-native'
-import { MaterialIcons } from '@expo/vector-icons'
-import { firebase } from '../Config/firebase'
+import { Octicons } from '@expo/vector-icons'
+import { firebase } from '../config/firebase'
 
 import {
   NativeBaseProvider,
@@ -42,8 +42,10 @@ export default function Register({ navigation }) {
           password: password,
           adress: adress,
           phone: phone,
+          createdAt: new Date(),
         }
         if (userData != null) {
+          setError(false)
           await firebase
             .firestore()
             .collection('users')
@@ -51,11 +53,13 @@ export default function Register({ navigation }) {
             .set(userData)
           Alert.alert('Sua conta foi cadastrada com sucesso!')
           console.log('Sucesso! Conta criada: ', userData.name)
+          navigation.navigate('Login')
         }
       })
       .catch((error) => {
+        setError(true)
         Alert.alert('Erro!', error.message)
-        console.error(error.message)
+        console.log(error.message)
       })
   }
   return (
@@ -63,23 +67,27 @@ export default function Register({ navigation }) {
       <ScrollView>
         <Center flex={'1'} p={'8'} mt={'16'}>
           <Stack alignItems="center" space={2} mb={'2'}>
-            <Heading size={'xl'} fontWeight="bold" color={'#495057'}>
-              Criar sua nova conta
+            <Heading size={'2xl'} fontWeight={'bold'} color={'#495057'}>
+              Criar sua conta
             </Heading>
-            <Text color={'#6c757d'} opacity="0.8" textAlign={'center'}>
+            <Text textAlign={'center'}>
               Preencha seus dados corretamente para a criação da sua conta.
               Recomendamos que você crie sua conta quando estiver com tempo
-              livre e com calma. Você pode alterar seus dados depois.
+              livre e com calma.
+            </Text>
+            <Text color={'#6c757d'} opacity="0.8" textAlign={'center'}>
+              Você pode alterar seus dados a qualquer momento na página do seu
+              perfil
             </Text>
           </Stack>
-          <FormControl isRequired>
+          <FormControl isInvalid={error}>
             <Stack space={'2'}>
               <Stack>
                 <FormControl.Label>Nome</FormControl.Label>
                 <Input
                   InputLeftElement={
                     <Icon
-                      as={<MaterialIcons name="person-outline" />}
+                      as={<Octicons name="person" />}
                       size={4}
                       ml="2"
                       color="#ddbea9"
@@ -93,9 +101,7 @@ export default function Register({ navigation }) {
                   onChangeText={(name) => setName(name)}
                 />
                 <FormControl.ErrorMessage
-                  leftIcon={
-                    <MaterialIcons name="dangerous" color={'#F13636'} />
-                  }
+                  leftIcon={<Octicons name="alert" color={'#F13636'} />}
                 >
                   Seu nome não pode estar vazio!
                 </FormControl.ErrorMessage>
@@ -105,7 +111,7 @@ export default function Register({ navigation }) {
                 <Input
                   InputLeftElement={
                     <Icon
-                      as={<MaterialIcons name="phone-iphone" />}
+                      as={<Octicons name="device-mobile" />}
                       size={4}
                       ml="2"
                       color="#ddbea9"
@@ -119,9 +125,7 @@ export default function Register({ navigation }) {
                   onChangeText={(phone) => setPhone(phone)}
                 />
                 <FormControl.ErrorMessage
-                  leftIcon={
-                    <MaterialIcons name="dangerous" color={'#F13636'} />
-                  }
+                  leftIcon={<Octicons name="alert" color={'#F13636'} />}
                 >
                   Seu telefone não pode estar vazio!
                 </FormControl.ErrorMessage>
@@ -131,22 +135,20 @@ export default function Register({ navigation }) {
                 <Input
                   InputLeftElement={
                     <Icon
-                      as={<MaterialIcons name="gps-fixed" />}
+                      as={<Octicons name="location" />}
                       size={4}
                       ml="2"
                       color="#ddbea9"
                     />
                   }
                   variant={'filled'}
-                  autoCapitalize="characters"
+                  autoCapitalize="words"
                   p={2}
                   placeholder="Endereço"
                   onChangeText={(adress) => setAdress(adress)}
                 />
                 <FormControl.ErrorMessage
-                  leftIcon={
-                    <MaterialIcons name="dangerous" color={'#F13636'} />
-                  }
+                  leftIcon={<Octicons name="alert" color={'#F13636'} />}
                 >
                   Seu Endereço não pode estar vazio!
                 </FormControl.ErrorMessage>
@@ -156,7 +158,7 @@ export default function Register({ navigation }) {
                 <Input
                   InputLeftElement={
                     <Icon
-                      as={<MaterialIcons name="mail-outline" />}
+                      as={<Octicons name="mail" />}
                       size={4}
                       ml="2"
                       color="#ddbea9"
@@ -170,9 +172,7 @@ export default function Register({ navigation }) {
                   onChangeText={(email) => setEmail(email)}
                 />
                 <FormControl.ErrorMessage
-                  leftIcon={
-                    <MaterialIcons name="dangerous" color={'#F13636'} />
-                  }
+                  leftIcon={<Octicons name="alert" color={'#F13636'} />}
                 >
                   O Email não pode estar vazio!
                 </FormControl.ErrorMessage>
@@ -183,7 +183,7 @@ export default function Register({ navigation }) {
                   type={show ? 'text' : 'password'}
                   InputLeftElement={
                     <Icon
-                      as={<MaterialIcons name="lock-outline" />}
+                      as={<Octicons name="lock" />}
                       size={4}
                       ml="2"
                       color="#ddbea9"
@@ -192,14 +192,10 @@ export default function Register({ navigation }) {
                   InputRightElement={
                     <Pressable onPress={() => setShow(!show)}>
                       <Icon
-                        as={
-                          <MaterialIcons
-                            name={show ? 'visibility' : 'visibility-off'}
-                          />
-                        }
+                        as={<Octicons name={show ? 'eye' : 'eye-closed'} />}
                         size={4}
                         mr="4"
-                        color="muted.400"
+                        color="muted.300"
                       />
                     </Pressable>
                   }
@@ -213,9 +209,7 @@ export default function Register({ navigation }) {
                   A senha deve conter no mínimo 8 caracteres.
                 </FormControl.HelperText>
                 <FormControl.ErrorMessage
-                  leftIcon={
-                    <MaterialIcons name="dangerous" color={'#F13636'} />
-                  }
+                  leftIcon={<Octicons name="alert" color={'#F13636'} />}
                 >
                   A senha não pode estar vazia!
                 </FormControl.ErrorMessage>

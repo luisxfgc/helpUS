@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { firebase } from '../Config/firebase'
 import { useNavigation } from '@react-navigation/native'
 import { Octicons } from '@expo/vector-icons'
+import { firebase } from '../config/firebase'
 import {
   NativeBaseProvider,
   Center,
@@ -72,7 +72,7 @@ export default function Dashboard() {
               return (
                 <Box key={user.id} p={'6'} rounded={'2xl'} bgColor={'white'}>
                   <HStack
-                    mb={'4'}
+                    mb={'2.5'}
                     alignItems={'center'}
                     justifyContent={'space-between'}
                   >
@@ -82,10 +82,11 @@ export default function Dashboard() {
                         {user.name}
                       </Heading>
                     </HStack>
-                    <Button size={'xs'}>Adicionar</Button>
+                    <Button bg={'#22223b'} size={'xs'}>
+                      <Octicons name="plus" color={'white'} />
+                    </Button>
                   </HStack>
-
-                  <Divider mb={'4'} bg={'muted.100'} />
+                  <Divider mb={'4'} bg={'muted.50'} />
                   <VStack space={'2'} p={'4'} bg={'indigo.50'} rounded={'2xl'}>
                     <Text>Email: {user.email}</Text>
                     <Text>Telefone: {user.phone}</Text>
@@ -97,6 +98,22 @@ export default function Dashboard() {
           </Stack>
         </Box>
       </ScrollView>
+      <Center position={'absolute'} bottom={'4'} left={'0'} right={'0'}>
+        <Pressable
+          py={'3'}
+          px={'6'}
+          rounded={'full'}
+          bgColor="#ef233c"
+          _pressed={{ bg: '#d90429' }}
+        >
+          <HStack alignItems={'center'} justifyContent={'center'} space={'2'}>
+            <Octicons name="alert" color="white" />
+            <Text color={'white'} fontSize={'md'}>
+              Preciso de ajuda!
+            </Text>
+          </HStack>
+        </Pressable>
+      </Center>
     </NativeBaseProvider>
   )
 }

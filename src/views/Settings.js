@@ -12,7 +12,7 @@ import {
   VStack,
 } from 'native-base'
 
-import { AuthContext } from '../Providers/AuthContext'
+import { AuthContext } from '../providers/AuthContext'
 
 export default function Settings() {
   const { signOut } = useContext(AuthContext)
