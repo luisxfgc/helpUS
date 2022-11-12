@@ -1,4 +1,4 @@
-package com.helpusapp;
+package com.kazok.helpus;
 
 import android.os.Build;
 import android.os.Bundle;

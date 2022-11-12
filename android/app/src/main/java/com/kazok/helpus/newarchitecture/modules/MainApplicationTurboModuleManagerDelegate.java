@@ -1,4 +1,4 @@
-package com.helpusapp.newarchitecture.modules;
+package com.kazok.helpus.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;

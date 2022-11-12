@@ -64,24 +64,28 @@ export default function Register({ navigation }) {
   }
   return (
     <NativeBaseProvider>
+      <Image
+        source={{
+          uri: 'https://images.unsplash.com/photo-1532356884227-66d7c0e9e4c2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
+        }}
+        alt="Alternate Text"
+        size={'xl'}
+        w={'full'}
+        h={'1/5'}
+      />
       <ScrollView>
-        <Center flex={'1'} p={'8'} mt={'12'}>
-          <Stack alignItems="center" space={2} mb={'2'}>
-            <Heading size={'2xl'} fontWeight={'bold'} color={'#495057'}>
+        <Center p={'8'}>
+          <Stack alignItems={'center'} space={2} mb={'2'}>
+            <Heading size={'xl'} fontWeight={'bold'} color={'#495057'}>
               Criar sua conta
             </Heading>
             <Text textAlign={'center'}>
-              Preencha seus dados corretamente para a criação da sua conta.
-              Recomendamos que você crie sua conta quando estiver com tempo
-              livre e com calma.
-            </Text>
-            <Text color={'#6c757d'} opacity="0.8" textAlign={'center'}>
-              Você pode alterar seus dados a qualquer momento na página do seu
-              perfil
+              Preencha seus dados corretamente para a criação da sua conta, você pode alterar seus dados a qualquer momento na página do seu
+              perfil.
             </Text>
           </Stack>
           <FormControl isInvalid={error}>
-            <Stack space={'2'}>
+            <Stack space={'1'}>
               <Stack>
                 <FormControl.Label>Nome</FormControl.Label>
                 <Input

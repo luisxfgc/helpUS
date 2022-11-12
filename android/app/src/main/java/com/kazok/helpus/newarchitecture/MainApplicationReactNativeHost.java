@@ -1,4 +1,4 @@
-package com.helpusapp.newarchitecture;
+package com.kazok.helpus.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -20,9 +20,9 @@ import com.facebook.react.fabric.EmptyReactNativeConfig;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.helpusapp.BuildConfig;
-import com.helpusapp.newarchitecture.components.MainComponentsRegistry;
-import com.helpusapp.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.kazok.helpus.BuildConfig;
+import com.kazok.helpus.newarchitecture.components.MainComponentsRegistry;
+import com.kazok.helpus.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

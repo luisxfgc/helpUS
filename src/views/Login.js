@@ -5,6 +5,7 @@ import { firebase } from '../config/firebase'
 
 import {
   NativeBaseProvider,
+  Image,
   Center,
   FormControl,
   Stack,
@@ -16,6 +17,7 @@ import {
   Pressable,
   Divider,
   HStack,
+  VStack,
 } from 'native-base'
 
 export default function Login({ navigation }) {
@@ -46,14 +48,25 @@ export default function Login({ navigation }) {
   return (
     <NativeBaseProvider>
       <SafeAreaView>
-        <Center height={'full'} p={'8'}>
-          <Stack alignItems="center" mb="5" space={2}>
-            <Heading size="2xl" fontWeight={'bold'} color={'#495057'}>
-              Fazer login
-            </Heading>
-            <Text color={'#6c757d'} opacity="0.9">
-              Utilize suas credenciais para entrar ou crie uma conta!
-            </Text>
+        <Image
+          source={{
+            uri: 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
+          }}
+          alt="Imagem principal, pessoas de mãos dadas"
+          size={'xl'}
+          w={'full'}
+          h={'1/5'}
+        />
+        <Center p={'8'}>
+          <Stack alignItems="center" mb="5" space={'8'}>
+            <VStack alignItems={'center'} space={'2'}>
+              <Heading size="xl" fontWeight={'bold'} color={'#495057'}>
+                Bem-vindo ao helpUS
+              </Heading>
+              <Text color={'#6c757d'} opacity="0.9">
+                Utilize suas credenciais para entrar ou crie uma conta!
+              </Text>
+            </VStack>
           </Stack>
           <FormControl isRequired>
             <Stack space={2}>
@@ -124,7 +137,7 @@ export default function Login({ navigation }) {
                 <Center w={'full'}>
                   <HStack alignItems={'center'} space={'4'}>
                     <Divider w={'1/4'} bgColor={'muted.200'} />
-                    <Text fontSize={'xs'} color={'muted.400'}>
+                    <Text fontSize={'sm'} color={'muted.400'}>
                       Ou você pode
                     </Text>
                     <Divider w={'1/4'} bgColor={'muted.200'} />

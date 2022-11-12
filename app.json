@@ -5,6 +5,14 @@
     "version": "1.0.2",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "6c6bd5d9-a896-4047-ac5a-8314ca531e14"
+      }
+    },
+    "android": {
+      "package": "com.kazok.helpus"
+    }
   }
 }
