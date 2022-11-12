@@ -34,12 +34,12 @@ export default function Login({ navigation }) {
           ToastAndroid.BOTTOM,
           ToastAndroid.LONG
         )
-        navigation.navigate('Dashboard')
-        console.log('Login Realizado com sucesso, bem-vindo ', user.email)
+        console.log('Login Realizado com sucesso', user)
+        return navigation.navigate('HomePage', user)
       })
       .catch((error) => {
         Alert.alert('Erro ao fazer Login', error.message)
-        console.log(error.message)
+        console.log('Erro ao fazer Login', error.message)
       })
   }
 

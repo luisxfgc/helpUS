@@ -58,14 +58,14 @@ export default function Register({ navigation }) {
       })
       .catch((error) => {
         setError(true)
-        Alert.alert('Erro!', error.message)
-        console.log(error.message)
+        Alert.alert('Erro ao criar sua conta!', error.message)
+        console.log('Erro ao criar sua conta', error.message)
       })
   }
   return (
     <NativeBaseProvider>
       <ScrollView>
-        <Center flex={'1'} p={'8'} mt={'16'}>
+        <Center flex={'1'} p={'8'} mt={'12'}>
           <Stack alignItems="center" space={2} mb={'2'}>
             <Heading size={'2xl'} fontWeight={'bold'} color={'#495057'}>
               Criar sua conta

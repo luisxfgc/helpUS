@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { ActivityIndicator, LogBox, View } from 'react-native'
+import { ActivityIndicator, Alert, LogBox, View } from 'react-native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
@@ -55,7 +55,7 @@ function HomePage() {
       <Tab.Screen
         name="Profile"
         component={Profile}
-        options={{ title: 'Perfil' }}
+        options={{ title: 'Seu perfil' }}
       />
       <Tab.Screen
         name="Settings"
@@ -74,11 +74,10 @@ function App() {
     const unsubscribe = firebase.auth().onAuthStateChanged((userToken) => {
       const token = firebase.auth().currentUser
       setUserToken(token)
-      console.log('user login token:', userToken)
-      if (isLoading) {
-        setIsLoading(false)
-      }
     })
+    if (isLoading) {
+      setIsLoading(false)
+    }
     return unsubscribe
   }, [])
 

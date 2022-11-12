@@ -18,7 +18,7 @@ import {
   Button,
 } from 'native-base'
 
-export default function Dashboard() {
+export default function Dashboard(props) {
   const [user, setUser] = useState([])
 
   const navigation = useNavigation()
@@ -35,7 +35,7 @@ export default function Dashboard() {
               mt={'4'}
               mx={'8'}
               onPress={() => {
-                navigation.navigate('AddUser')
+                navigation.navigate('AddUser', { id: '1' })
               }}
             >
               <Octicons name="person-add" size={20} color="#495059" />
@@ -81,6 +81,7 @@ export default function Dashboard() {
                       <Heading fontSize={'18'} color={'#495059'}>
                         {user.name}
                       </Heading>
+                      <Text>{props.route.params?.user}</Text>
                     </HStack>
                     <Button bg={'#22223b'} size={'xs'}>
                       <Octicons name="plus" color={'white'} />
