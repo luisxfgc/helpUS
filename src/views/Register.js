@@ -30,7 +30,7 @@ export default function Register({ navigation }) {
   const [show, setShow] = useState(false)
   const [error, setError] = useState(false)
 
-  const handleCreateAccount = async () => {
+  const handleCreateAccount = () => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
@@ -46,12 +46,12 @@ export default function Register({ navigation }) {
         }
         if (userData != null) {
           setError(false)
-          await firebase
-            .firestore()
-            .collection('users')
-            .doc(user.uid)
-            .set(userData)
-          Alert.alert('Sua conta foi cadastrada com sucesso!')
+          firebase.firestore().collection('users').doc(user.uid).set(userData)
+          ToastAndroid.show(
+            'Sua conta foi criada com sucesso!',
+            ToastAndroid.BOTTOM,
+            ToastAndroid.SHORT
+          )
           console.log('Sucesso! Conta criada: ', userData.name)
           navigation.navigate('Login')
         }

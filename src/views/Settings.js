@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { Octicons } from '@expo/vector-icons'
+import { firebase } from '../config/firebase'
 import {
   NativeBaseProvider,
   Box,
@@ -12,10 +13,10 @@ import {
   VStack,
 } from 'native-base'
 
-import { AuthContext } from '../providers/AuthContext'
-
 export default function Settings() {
-  const { signOut } = useContext(AuthContext)
+  const signOut = () => {
+    firebase.auth().signOut()
+  }
   return (
     <NativeBaseProvider>
       <Box flex={'1'} m={'6'} justifyContent={'space-between'}>

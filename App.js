@@ -3,7 +3,7 @@ import { ActivityIndicator, LogBox, View } from 'react-native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
-import { AuthContext } from './src/providers/AuthContext'
+import { firebase } from './src/config/firebase'
 import { Octicons } from '@expo/vector-icons'
 LogBox.ignoreLogs(['EventEmitter.removeListener'])
 
@@ -70,25 +70,16 @@ function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [userToken, setUserToken] = useState(null)
 
-  const authContext = useMemo(() => ({
-    signIn: () => {
-      setUserToken('123')
-      setIsLoading(false)
-    },
-    signUp: () => {
-      setUserToken('123')
-      setIsLoading(false)
-    },
-    signOut: () => {
-      setUserToken(null)
-      setIsLoading(false)
-    },
-  }))
-
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 100)
+    const unsubscribe = firebase.auth().onAuthStateChanged((userToken) => {
+      const token = firebase.auth().currentUser
+      setUserToken(token)
+      console.log('user login token:', userToken)
+      if (isLoading) {
+        setIsLoading(false)
+      }
+    })
+    return unsubscribe
   }, [])
 
   if (isLoading) {
@@ -99,44 +90,42 @@ function App() {
     )
   }
   return (
-    <AuthContext.Provider value={authContext}>
-      <NavigationContainer>
-        <Stack.Navigator>
-          {userToken !== null ? (
-            <Stack.Group>
-              <Stack.Screen
-                name="HomePage"
-                component={HomePage}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="AddUser"
-                component={AddUser}
-                options={{ title: 'Adicionar um amigo' }}
-              />
-            </Stack.Group>
-          ) : (
-            <Stack.Group>
-              <Stack.Screen
-                name="Login"
-                component={Login}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="Register"
-                component={Register}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="PasswordRecovery"
-                component={PasswordRecovery}
-                options={{ title: 'Recuperar sua conta' }}
-              />
-            </Stack.Group>
-          )}
-        </Stack.Navigator>
-      </NavigationContainer>
-    </AuthContext.Provider>
+    <NavigationContainer>
+      <Stack.Navigator>
+        {userToken !== null ? (
+          <Stack.Group>
+            <Stack.Screen
+              name="HomePage"
+              component={HomePage}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="AddUser"
+              component={AddUser}
+              options={{ title: 'Adicionar um amigo' }}
+            />
+          </Stack.Group>
+        ) : (
+          <Stack.Group>
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Register"
+              component={Register}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="PasswordRecovery"
+              component={PasswordRecovery}
+              options={{ title: 'Recuperar sua conta' }}
+            />
+          </Stack.Group>
+        )}
+      </Stack.Navigator>
+    </NavigationContainer>
   )
 }
 

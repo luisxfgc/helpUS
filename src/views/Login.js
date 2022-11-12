@@ -2,7 +2,6 @@ import React, { useContext, useState } from 'react'
 import { Alert, SafeAreaView, ToastAndroid } from 'react-native'
 import { Octicons } from '@expo/vector-icons'
 import { firebase } from '../config/firebase'
-import { AuthContext } from '../providers/AuthContext'
 
 import {
   NativeBaseProvider,
@@ -20,8 +19,6 @@ import {
 } from 'native-base'
 
 export default function Login({ navigation }) {
-  const { signIn } = useContext(AuthContext)
-
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [show, setShow] = useState(false)
@@ -37,7 +34,7 @@ export default function Login({ navigation }) {
           ToastAndroid.BOTTOM,
           ToastAndroid.LONG
         )
-        navigation.navigate('HomePage', { screen: 'Dashboard' })
+        navigation.navigate('Dashboard')
         console.log('Login Realizado com sucesso, bem-vindo ', user.email)
       })
       .catch((error) => {
@@ -121,7 +118,6 @@ export default function Login({ navigation }) {
                   rounded={'full'}
                   onPress={handleSubmit}
                   bgColor="#22223b"
-                  _pressed={signIn}
                 >
                   Entrar
                 </Button>
