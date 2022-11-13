@@ -18,8 +18,10 @@ import {
   Button,
 } from 'native-base'
 
-export default function Dashboard(props) {
+export default function Dashboard() {
   const [user, setUser] = useState([])
+
+  const currentUserId = firebase.auth().currentUser.uid
 
   const navigation = useNavigation()
 
@@ -44,14 +46,11 @@ export default function Dashboard(props) {
         )
       },
     })
-  }, [navigation])
-
-  useEffect(() => {
     firebase
       .firestore()
       .collection('users')
       .onSnapshot((query) => {
-        const listUsers = []
+        let listUsers = []
         query.forEach((doc) => {
           listUsers.push({
             ...doc.data(),
@@ -61,7 +60,12 @@ export default function Dashboard(props) {
         })
         setUser(listUsers)
       })
-  }, [])
+  }, [navigation])
+
+  const addFriends = () => {
+    const currentUser = firebase.auth().currentUser.uid
+    firebase.firestore().collection('friendlist').doc(currentUser).set(user)
+  }
 
   return (
     <NativeBaseProvider>
@@ -81,11 +85,16 @@ export default function Dashboard(props) {
                       <Heading fontSize={'18'} color={'#495059'}>
                         {user.name}
                       </Heading>
-                      <Text>{props.route.params?.user}</Text>
                     </HStack>
-                    <Button bg={'#22223b'} size={'xs'}>
+                    <Pressable
+                      onPress={addFriends}
+                      bg={'#22223b'}
+                      py={'2'}
+                      px={'4'}
+                      rounded={'md'}
+                    >
                       <Octicons name="plus" color={'white'} />
-                    </Button>
+                    </Pressable>
                   </HStack>
                   <Divider mb={'4'} bg={'muted.50'} />
                   <VStack space={'2'} p={'4'} bg={'indigo.50'} rounded={'2xl'}>

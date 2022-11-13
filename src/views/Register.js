@@ -34,7 +34,7 @@ export default function Register({ navigation }) {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(async (userCredential) => {
+      .then((userCredential) => {
         const user = userCredential
         const userData = {
           name: name,
@@ -44,7 +44,7 @@ export default function Register({ navigation }) {
           phone: phone,
           createdAt: new Date(),
         }
-        if (userData != null) {
+        if (userData !== null) {
           setError(false)
           firebase.firestore().collection('users').doc(user.uid).set(userData)
           ToastAndroid.show(
@@ -54,6 +54,9 @@ export default function Register({ navigation }) {
           )
           console.log('Sucesso! Conta criada: ', userData.name)
           navigation.navigate('Login')
+          return user.user.updateProfile({
+            displayName: name,
+          })
         }
       })
       .catch((error) => {
@@ -71,7 +74,7 @@ export default function Register({ navigation }) {
         alt="Alternate Text"
         size={'xl'}
         w={'full'}
-        h={'1/5'}
+        h={'1/4'}
       />
       <ScrollView>
         <Center p={'8'}>
@@ -80,7 +83,8 @@ export default function Register({ navigation }) {
               Criar sua conta
             </Heading>
             <Text textAlign={'center'}>
-              Preencha seus dados corretamente para a criação da sua conta, você pode alterar seus dados a qualquer momento na página do seu
+              Preencha seus dados corretamente para a criação da sua conta, você
+              pode alterar seus dados a qualquer momento na página do seu
               perfil.
             </Text>
           </Stack>

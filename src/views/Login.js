@@ -36,8 +36,8 @@ export default function Login({ navigation }) {
           ToastAndroid.BOTTOM,
           ToastAndroid.LONG
         )
-        console.log('Login Realizado com sucesso', user)
-        return navigation.navigate('HomePage', user)
+        console.log('Login Realizado com sucesso', user.uid)
+        return navigation.navigate('HomePage')
       })
       .catch((error) => {
         Alert.alert('Erro ao fazer Login', error.message)
@@ -55,7 +55,7 @@ export default function Login({ navigation }) {
           alt="Imagem principal, pessoas de mãos dadas"
           size={'xl'}
           w={'full'}
-          h={'1/5'}
+          h={'48'}
         />
         <Center p={'8'}>
           <Stack alignItems="center" mb="5" space={'8'}>
@@ -63,7 +63,7 @@ export default function Login({ navigation }) {
               <Heading size="xl" fontWeight={'bold'} color={'#495057'}>
                 Bem-vindo ao helpUS
               </Heading>
-              <Text color={'#6c757d'} opacity="0.9">
+              <Text color={'#6c757d'} opacity="0.9" textAlign={'center'}>
                 Utilize suas credenciais para entrar ou crie uma conta!
               </Text>
             </VStack>
